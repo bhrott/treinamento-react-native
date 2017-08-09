@@ -9,20 +9,42 @@ import {
     Input,
     Password,
     PrimaryButton,
-    LinkButton
+    LinkButton,
+    KeyboardScrollView
 } from 'boo-ui/components'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import CreateAccountModal from './CreateAccountModal'
 
 export default class LoginPage extends Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            createAccountModalIsVisible: false,
+            username: '',
+            password: ''
+        }
+    }
+
+    _openAccountModal() {
+        this.setState({
+            createAccountModalIsVisible: true
+        })
+    }
+
+    _closeAccountModal() {
+        this.setState({
+            createAccountModalIsVisible: false
+        })
+    }
+
+    _signIn() {
+        alert(`username: ${this.state.username}, pass: ${this.state.password}`)
     }
 
     render() {
         return (
-            <KeyboardAwareScrollView 
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollViewContent}>
+            <KeyboardScrollView 
+                style={styles.scrollView}>
                 <View style={styles.container}>
                     <View style={logoStyle.container}>
                         <Image source={require('./img/logo.png')} />
@@ -35,27 +57,30 @@ export default class LoginPage extends Component {
                     <View style={formStyle.container}>
                         <Input
                             style={formStyle.input}
-                            inputProps={{
-                                placeholder: 'username'
-                            }}
+                            placeholder='username'
+                            autoCapitalize={'none'}
+                            autoCorrect={false}
+                            onChangeText={username => this.setState({ username })}
                         />
                         <Password
                             style={formStyle.input}
-                            inputProps={{
-                                placeholder: 'password'
-                            }}
+                            placeholder='password'
+                            onChangeText={password => this.setState({ password })}
                         />
                         <PrimaryButton
                             style={formStyle.button}
                             text='sign in'
+                            onPress={this._signIn.bind(this)}
                         />
                         <LinkButton
                             style={formStyle.button}
                             text='sign up'
+                            onPress={this._openAccountModal.bind(this)}
                         />
                     </View>
                 </View>
-            </KeyboardAwareScrollView>
+                <CreateAccountModal visible={this.state.createAccountModalIsVisible} />
+            </KeyboardScrollView>
         )
     }
 }
@@ -68,9 +93,6 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         backgroundColor: '#413C58'
-    },
-    scrollViewContent: {
-        flex: 1
     }
 })
 

@@ -10,24 +10,19 @@ export default class BooInput extends React.Component {
 
     render() {
         return (
-            <View style={[style.container, this.props.style]}>
-                <TextInput
-                    style={style.input}
-                    {...this.props.inputProps}
-                />
-            </View>
+            <TextInput
+                maxLength={50}
+                {...this.props}
+                style={[style.input, this.props.style]}
+            />
         )
     }
 }
 
 const style = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        height: 50
-    },
     input: {
-        flex: 1,
-        fontFamily: 'abel-regular',
-        margin: 5
+        backgroundColor: 'white',
+        height: 50,
+        fontFamily: 'abel-regular'
     }
 })

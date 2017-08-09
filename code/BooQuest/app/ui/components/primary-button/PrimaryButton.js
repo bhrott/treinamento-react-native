@@ -10,8 +10,9 @@ export default class BooPrimaryButton extends React.Component {
     render() {
         return (
             <TouchableOpacity 
-                style={[style.container, this.props.style]}
-                activeOpacity={0.7}>
+                activeOpacity={0.7}
+                {...this.props}
+                style={[style.container, this.props.style]}>
                 <Text style={style.text}>{this.props.text}</Text>
             </TouchableOpacity>
         )

@@ -11,7 +11,8 @@ export default class BooLinkButton extends React.Component {
         return (
             <TouchableOpacity 
                 style={[style.container, this.props.style]}
-                activeOpacity={0.7}>
+                activeOpacity={0.7}
+                onPress={this.props.onPress}>
                 <Text style={style.text}>{this.props.text}</Text>
             </TouchableOpacity>
         )
