@@ -4,49 +4,58 @@ import {
     StyleSheet,
     Image
 } from 'react-native'
-import { 
+import {
     Text,
     Input,
     Password,
     PrimaryButton,
     LinkButton
 } from 'boo-ui/components'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class LoginPage extends Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         return (
-            <View style={styles.container}>
-                <View style={logoStyle.container}>
-                    <Image source={require('./img/logo.png')}/>
-                    <View>
-                        <Text style={logoStyle.title}>
-                            BOO QUEST
-                        </Text>
+            <KeyboardAwareScrollView 
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollViewContent}>
+                <View style={styles.container}>
+                    <View style={logoStyle.container}>
+                        <Image source={require('./img/logo.png')} />
+                        <View>
+                            <Text style={logoStyle.title}>
+                                BOO QUEST
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={formStyle.container}>
+                        <Input
+                            style={formStyle.input}
+                            inputProps={{
+                                placeholder: 'username'
+                            }}
+                        />
+                        <Password
+                            style={formStyle.input}
+                            inputProps={{
+                                placeholder: 'password'
+                            }}
+                        />
+                        <PrimaryButton
+                            style={formStyle.button}
+                            text='sign in'
+                        />
+                        <LinkButton
+                            style={formStyle.button}
+                            text='sign up'
+                        />
                     </View>
                 </View>
-                <View style={formStyle.container}>
-                    <Input 
-                        style={formStyle.input}
-                        inputProps={{
-                            placeholder: 'username'
-                        }} 
-                    />
-                    <Password
-                        style={formStyle.input} 
-                        inputProps={{
-                            placeholder: 'password'
-                        }}
-                    />
-                    <PrimaryButton 
-                        style={formStyle.button} 
-                        text='sign in'
-                    />
-                    <LinkButton 
-                        style={formStyle.button} 
-                        text='sign up'
-                    />
-                </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }
@@ -56,6 +65,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    scrollView: {
+        backgroundColor: '#413C58'
+    },
+    scrollViewContent: {
+        flex: 1
     }
 })
 
