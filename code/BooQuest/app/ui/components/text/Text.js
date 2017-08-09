@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     Text,
     StyleSheet
 } from 'react-native'
 
-export default class BooText extends Component {
+export default class BooText extends React.Component {
     render() {
         return (
             <Text style={[style.text, this.props.style]}>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     View,
     StyleSheet,
@@ -13,16 +13,22 @@ import {
     LinkButton,
     KeyboardScrollView
 } from 'boo-ui/components'
+import {
+    ColorPalette
+} from 'boo-ui/utils'
 import CreateAccountModal from './CreateAccountModal'
 
-export default class LoginPage extends Component {
+export default class LoginPage extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
             createAccountModalIsVisible: false,
             username: '',
-            password: ''
+            password: '',
+
+            usernameInvalid: false,
+            passwordInvalid: false
         }
     }
 
@@ -39,6 +45,17 @@ export default class LoginPage extends Component {
     }
 
     _signIn() {
+        let nextState = {
+            usernameInvalid: !this.state.username,
+            passwordInvalid: !this.state.password
+        }
+
+        this.setState(nextState)
+
+        if (nextState.usernameInvalid || nextState.passwordInvalid) {
+            return
+        }
+
         alert(`username: ${this.state.username}, pass: ${this.state.password}`)
     }
 
@@ -52,6 +69,14 @@ export default class LoginPage extends Component {
         setTimeout(() => {
             alert('signup success!')
         }, 1000);
+    }
+
+    _onChangeField(name, value) {
+        let state = {}
+        state[name] = value
+        state[`${name}Invalid`] = false
+
+        this.setState(state)
     }
 
     render() {
@@ -73,12 +98,16 @@ export default class LoginPage extends Component {
                             placeholder='username'
                             autoCapitalize={'none'}
                             autoCorrect={false}
-                            onChangeText={username => this.setState({ username })}
+                            error={this.state.usernameInvalid}
+                            onChangeText={val => this._onChangeField('username', val)}
+                            value={this.state.username}
                         />
                         <Password
                             style={formStyle.input}
                             placeholder='password'
-                            onChangeText={password => this.setState({ password })}
+                            error={this.state.passwordInvalid}
+                            onChangeText={val => this._onChangeField('password', val)}
+                            value={this.state.password}
                         />
                         <PrimaryButton
                             style={formStyle.button}
@@ -108,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     scrollView: {
-        backgroundColor: '#413C58'
+        backgroundColor: ColorPalette.purplePrimary
     }
 })
 
@@ -118,7 +147,7 @@ const logoStyle = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#413C58'
+        backgroundColor: ColorPalette.purplePrimary
     },
     image: {
         height: 171,
@@ -126,7 +155,7 @@ const logoStyle = StyleSheet.create({
     },
     title: {
         fontSize: 40,
-        color: 'white',
+        color: ColorPalette.white,
         marginTop: 40
     }
 })
@@ -136,7 +165,7 @@ const formStyle = StyleSheet.create({
         height: 226,
         alignSelf: 'stretch',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: ColorPalette.white,
     },
     input: {
         width: 280,

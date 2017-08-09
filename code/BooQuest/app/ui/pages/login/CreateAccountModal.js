@@ -119,12 +119,10 @@ const headerStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-
     image: {
         width: 60,
         height: 74
     },
-
     title: {
         fontSize: 18,
         marginTop: 20

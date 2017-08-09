@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     View,
     Text
@@ -6,7 +6,7 @@ import {
 import { Font } from 'expo'
 import { LoginPage } from 'boo-ui/pages'
 
-export default class App extends Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props)
 
@@ -24,14 +24,14 @@ export default class App extends Component {
         loaded: true
       })
   }
-    
+
   render() {
     if (this.state.loaded) {
       return (<LoginPage />)
     }
 
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Text>Loading...</Text>
       </View>
     )
