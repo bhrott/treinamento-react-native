@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
     View,
     StyleSheet,
-    Image
+    Image,
+    InteractionManager
 } from 'react-native'
 import {
     Text,
@@ -39,6 +40,18 @@ export default class LoginPage extends Component {
 
     _signIn() {
         alert(`username: ${this.state.username}, pass: ${this.state.password}`)
+    }
+
+    _onCancelSignup() {
+        this._closeAccountModal()
+    }
+
+    _onSignupSuccess(user) {
+        this._closeAccountModal()
+
+        setTimeout(() => {
+            alert('signup success!')
+        }, 1000);
     }
 
     render() {
@@ -79,7 +92,10 @@ export default class LoginPage extends Component {
                         />
                     </View>
                 </View>
-                <CreateAccountModal visible={this.state.createAccountModalIsVisible} />
+                <CreateAccountModal 
+                    visible={this.state.createAccountModalIsVisible}
+                    onCancel={this._onCancelSignup.bind(this)}
+                    onSignup={this._onSignupSuccess.bind(this)} />
             </KeyboardScrollView>
         )
     }

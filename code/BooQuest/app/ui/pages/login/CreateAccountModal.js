@@ -42,7 +42,7 @@ export default class CreateAccountModal extends React.Component {
                 animationType={"slide"}
                 transparent={false}
                 visible={this.props.visible}
-                onRequestClose={() => { }}
+                onRequestClose={this._cancel.bind(this)}
             >
                 <KeyboardScrollView>
                     <View style={style.container}>
