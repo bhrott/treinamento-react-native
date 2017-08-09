@@ -1,5 +1,5 @@
 /**
- * @providesModule boo-ui
+ * @providesModule boo-ui/pages
  */
 
 import LoginPage from './login/LoginPage'

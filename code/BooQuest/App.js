@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { Font } from 'expo'
 
-import { LoginPage } from 'boo-ui'
+import { LoginPage } from 'boo-ui/pages'
 
 export default class App extends Component {
   constructor(props) {
