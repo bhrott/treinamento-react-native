@@ -1,23 +1,40 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
+import {
+    View,
+    Text
+} from 'react-native'
+import { Font } from 'expo'
 
-export default class App extends React.Component {
+import { LoginPage } from 'boo-ui'
+
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loaded: false
+    }
+  }
+
+  async componentDidMount() {
+      await Font.loadAsync({
+          'abel-regular': require('./assets/fonts/Abel-Regular.ttf'),
+      });
+
+      this.setState({
+        loaded: true
+      })
+  }
+
   render() {
+    if (this.state.loaded) {
+      return (<LoginPage />)
+    }
+
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+      <View>
+        <Text>Loading...</Text>
       </View>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
