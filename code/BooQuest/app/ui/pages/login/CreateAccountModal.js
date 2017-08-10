@@ -18,7 +18,7 @@ import {
     TextValidator
 } from 'boo-core'
 import {
-    CreateUser
+    SignUpUser
 } from 'boo-domain'
 
 export default class CreateAccountModal extends React.Component {
@@ -58,7 +58,7 @@ export default class CreateAccountModal extends React.Component {
         }
 
         try {
-            let user = await CreateUser(this.state.email, this.state.password)
+            let user = await SignUpUser(this.state.email, this.state.password)
             
             this.props.onSignup({ user })
             this._resetState()

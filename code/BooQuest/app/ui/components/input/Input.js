@@ -4,6 +4,7 @@ import {
     TextInput,
     StyleSheet
 } from 'react-native'
+import PropTypes from 'prop-types'
 import { ColorPalette } from 'boo-ui/utils'
 
 export default class BooInput extends React.Component {
@@ -21,6 +22,14 @@ export default class BooInput extends React.Component {
             />
         )
     }
+}
+
+BooInput.propTypes = {
+    error: PropTypes.bool
+}
+
+BooInput.defaultProps = {
+    error: false
 }
 
 const style = StyleSheet.create({

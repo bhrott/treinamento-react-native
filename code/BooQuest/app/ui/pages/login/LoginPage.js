@@ -13,12 +13,9 @@ import {
     LinkButton,
     KeyboardScrollView
 } from 'boo-ui/components'
-import {
-    ColorPalette
-} from 'boo-ui/utils'
-import {
-    TextValidator
-} from 'boo-core'
+import { ColorPalette } from 'boo-ui/utils'
+import { TextValidator } from 'boo-core'
+import { SignInUserWithEmailAndPassword } from 'boo-domain'
 
 import CreateAccountModal from './CreateAccountModal'
 
@@ -48,7 +45,21 @@ export default class LoginPage extends React.Component {
         })
     }
 
-    _signIn() {
+    async _signIn() {
+        if (!this._validateForm()) {
+            return
+        }
+
+        try {
+            const user = await SignInUserWithEmailAndPassword(this.state.email, this.state.password)
+            alert(`Signin success (uid: ${user.uid})`)
+        } catch (error) {
+            this._clearPassword()
+            alert(error.message)            
+        }
+    }
+
+    _validateForm() {
         let nextState = {
             emailInvalid: TextValidator.isNullOrEmpty(this.state.email),
             passwordInvalid: TextValidator.isNullOrEmpty(this.state.password)
@@ -57,10 +68,14 @@ export default class LoginPage extends React.Component {
         this.setState(nextState)
 
         if (nextState.emailInvalid || nextState.passwordInvalid) {
-            return
+            return false
         }
 
-        alert(`email: ${this.state.email}, pass: ${this.state.password}`)
+        return true
+    }
+
+    _clearPassword() {
+        this._onChangeField('password', '')
     }
 
     _onCancelSignup() {

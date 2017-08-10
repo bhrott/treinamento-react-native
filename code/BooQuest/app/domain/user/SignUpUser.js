@@ -23,7 +23,7 @@ export default async (email, password) => {
         }
 
         throw {
-            message: message
+            message
         }
     }
 }
