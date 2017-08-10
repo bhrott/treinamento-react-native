@@ -14,26 +14,94 @@ import {
     LinkButton,
     KeyboardScrollView
 } from 'boo-ui/components'
+import {
+    TextValidator
+} from 'boo-core'
+import {
+    CreateUser
+} from 'boo-domain'
 
 export default class CreateAccountModal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            username: '',
+        this.state = this._getDefaultState()
+    }
+
+    _getDefaultState() {
+        const defaultState = {
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+
+            // form validation
+            emailInvalid: false,
+            passwordInvalid: false,
+            confirmPasswordInvalid: false
         }
+
+        return JSON.parse(JSON.stringify(defaultState))
+    }
+
+    _resetState() {
+        this.setState(this._getDefaultState())
     }
 
     _cancel() {
         this.props.onCancel()
+        this._resetState()
     }
 
-    _signup() {
-        const user = {}
-        this.props.onSignup({ user })
+    async _signup() {
+        if (!this._validateForm()) {
+            return
+        }
+
+        try {
+            let user = await CreateUser(this.state.email, this.state.password)
+            
+            this.props.onSignup({ user })
+            this._resetState()
+        }
+        catch (error) {
+            this._clearPasswords()
+            alert(error.message)
+        }
+    }
+
+    _clearPasswords() {
+        this._onChangeField('password', '')
+        this._onChangeField('confirmPassword', '')
+    }
+
+    _validateForm() {
+        let newState = {
+            emailInvalid: TextValidator.isNullOrEmpty(this.state.email),
+            passwordInvalid: TextValidator.isNullOrEmpty(this.state.password),
+            confirmPasswordInvalid: 
+                TextValidator.isNullOrEmpty(this.state.confirmPassword)
+                || this.state.password != this.state.confirmPassword
+        }
+
+        this.setState(newState)
+
+        for (var k in newState) {
+            if (newState.hasOwnProperty(k)) {
+                if (newState[k] === true) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
+    _onChangeField(name, val) {
+        let state = {}
+        state[name] = val
+        state[`${name}Invalid`] = false
+
+        this.setState(state)
     }
 
     render() {
@@ -54,32 +122,26 @@ export default class CreateAccountModal extends React.Component {
                         </View>
                         <View style={formStyle.container}>
                             <View>
-                                <Input
-                                    style={formStyle.input}
-                                    placeholder={'username'}
-                                    autoCapitalize={'none'}
-                                    autoCorrect={false}
-                                    onChangeText={username => this.setState({username})}
-                                    value={this.state.username} />
-                            </View>
-                            <View>
                                 <Email
                                     style={formStyle.input}
-                                    onChangeText={email => this.setState({email})}
+                                    error={this.state.emailInvalid}
+                                    onChangeText={val => this._onChangeField('email', val)}
                                     value={this.state.email} />
                             </View>
                             <View>
                                 <Password
                                     style={formStyle.input}
                                     placeholder={'password'}
-                                    onChangeText={password => this.setState({password})}
+                                    error={this.state.passwordInvalid}
+                                    onChangeText={val => this._onChangeField('password', val)}
                                     value={this.state.password} />
                             </View>
                             <View>
                                 <Password
                                     style={formStyle.input}
                                     placeholder={'confirm password'}
-                                    onChangeText={confirmPassword => this.setState({confirmPassword})}
+                                    error={this.state.confirmPasswordInvalid}
+                                    onChangeText={val => this._onChangeField('confirmPassword', val)}
                                     value={this.state.confirmPassword} />
                             </View>
                             <View>
@@ -112,10 +174,10 @@ const style = StyleSheet.create({
 
 const headerStyle = StyleSheet.create({
     container: {
-        height: 155,
+        height: 200,
         alignSelf: 'stretch',
         backgroundColor: 'white',
-        paddingTop: 20,
+        paddingTop: 40,
         alignItems: 'center',
         justifyContent: 'center'
     },

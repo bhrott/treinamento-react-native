@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import {
     Text,
-    Input,
+    Email,
     Password,
     PrimaryButton,
     LinkButton,
@@ -16,6 +16,10 @@ import {
 import {
     ColorPalette
 } from 'boo-ui/utils'
+import {
+    TextValidator
+} from 'boo-core'
+
 import CreateAccountModal from './CreateAccountModal'
 
 export default class LoginPage extends React.Component {
@@ -24,10 +28,10 @@ export default class LoginPage extends React.Component {
 
         this.state = {
             createAccountModalIsVisible: false,
-            username: '',
+            email: '',
             password: '',
 
-            usernameInvalid: false,
+            emailInvalid: false,
             passwordInvalid: false
         }
     }
@@ -46,17 +50,17 @@ export default class LoginPage extends React.Component {
 
     _signIn() {
         let nextState = {
-            usernameInvalid: !this.state.username,
-            passwordInvalid: !this.state.password
+            emailInvalid: TextValidator.isNullOrEmpty(this.state.email),
+            passwordInvalid: TextValidator.isNullOrEmpty(this.state.password)
         }
 
         this.setState(nextState)
 
-        if (nextState.usernameInvalid || nextState.passwordInvalid) {
+        if (nextState.emailInvalid || nextState.passwordInvalid) {
             return
         }
 
-        alert(`username: ${this.state.username}, pass: ${this.state.password}`)
+        alert(`email: ${this.state.email}, pass: ${this.state.password}`)
     }
 
     _onCancelSignup() {
@@ -93,14 +97,11 @@ export default class LoginPage extends React.Component {
                         </View>
                     </View>
                     <View style={formStyle.container}>
-                        <Input
+                        <Email
                             style={formStyle.input}
-                            placeholder='username'
-                            autoCapitalize={'none'}
-                            autoCorrect={false}
-                            error={this.state.usernameInvalid}
-                            onChangeText={val => this._onChangeField('username', val)}
-                            value={this.state.username}
+                            error={this.state.emailInvalid}
+                            onChangeText={val => this._onChangeField('email', val)}
+                            value={this.state.email}
                         />
                         <Password
                             style={formStyle.input}
