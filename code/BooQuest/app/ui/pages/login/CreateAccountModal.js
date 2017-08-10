@@ -12,7 +12,8 @@ import {
     Password,
     PrimaryButton,
     LinkButton,
-    KeyboardScrollView
+    KeyboardScrollView,
+    Alert
 } from 'boo-ui/components'
 import {
     TextValidator
@@ -30,6 +31,7 @@ export default class CreateAccountModal extends React.Component {
 
     _getDefaultState() {
         const defaultState = {
+            // form data
             email: '',
             password: '',
             confirmPassword: '',
@@ -37,10 +39,10 @@ export default class CreateAccountModal extends React.Component {
             // form validation
             emailInvalid: false,
             passwordInvalid: false,
-            confirmPasswordInvalid: false
+            confirmPasswordInvalid: false,
         }
 
-        return JSON.parse(JSON.stringify(defaultState))
+        return defaultState
     }
 
     _resetState() {
@@ -59,13 +61,13 @@ export default class CreateAccountModal extends React.Component {
 
         try {
             await SignUpUser(this.state.email, this.state.password)
-            
+
             this.props.onSignup()
             this._resetState()
         }
         catch (error) {
             this._clearPasswords()
-            alert(error.message)
+            this.alertInstance.showError(error.message)
         }
     }
 
@@ -78,9 +80,9 @@ export default class CreateAccountModal extends React.Component {
         let newState = {
             emailInvalid: TextValidator.isNullOrEmpty(this.state.email),
             passwordInvalid: TextValidator.isNullOrEmpty(this.state.password),
-            confirmPasswordInvalid: 
-                TextValidator.isNullOrEmpty(this.state.confirmPassword)
-                || this.state.password != this.state.confirmPassword
+            confirmPasswordInvalid:
+            TextValidator.isNullOrEmpty(this.state.confirmPassword)
+            || this.state.password != this.state.confirmPassword
         }
 
         this.setState(newState)
@@ -104,6 +106,10 @@ export default class CreateAccountModal extends React.Component {
         this.setState(state)
     }
 
+    _removeAlert() {
+
+    }
+
     render() {
         return (
             <Modal
@@ -121,44 +127,35 @@ export default class CreateAccountModal extends React.Component {
                             <Text style={headerStyle.title}>create your account</Text>
                         </View>
                         <View style={formStyle.container}>
-                            <View>
-                                <Email
-                                    style={formStyle.input}
-                                    error={this.state.emailInvalid}
-                                    onChangeText={val => this._onChangeField('email', val)}
-                                    value={this.state.email} />
-                            </View>
-                            <View>
-                                <Password
-                                    style={formStyle.input}
-                                    placeholder={'password'}
-                                    error={this.state.passwordInvalid}
-                                    onChangeText={val => this._onChangeField('password', val)}
-                                    value={this.state.password} />
-                            </View>
-                            <View>
-                                <Password
-                                    style={formStyle.input}
-                                    placeholder={'confirm password'}
-                                    error={this.state.confirmPasswordInvalid}
-                                    onChangeText={val => this._onChangeField('confirmPassword', val)}
-                                    value={this.state.confirmPassword} />
-                            </View>
-                            <View>
-                                <PrimaryButton
-                                    style={formStyle.button}
-                                    text={'sign up'} 
-                                    onPress={this._signup.bind(this)}/>
-                            </View>
-                            <View>
-                                <LinkButton
-                                    style={formStyle.button}
-                                    text={'cancel'}
-                                    onPress={this._cancel.bind(this)} />
-                            </View>
+                            <Email
+                                style={formStyle.input}
+                                error={this.state.emailInvalid}
+                                onChangeText={val => this._onChangeField('email', val)}
+                                value={this.state.email} />
+                            <Password
+                                style={formStyle.input}
+                                placeholder={'password'}
+                                error={this.state.passwordInvalid}
+                                onChangeText={val => this._onChangeField('password', val)}
+                                value={this.state.password} />
+                            <Password
+                                style={formStyle.input}
+                                placeholder={'confirm password'}
+                                error={this.state.confirmPasswordInvalid}
+                                onChangeText={val => this._onChangeField('confirmPassword', val)}
+                                value={this.state.confirmPassword} />
+                            <PrimaryButton
+                                style={formStyle.button}
+                                text={'sign up'}
+                                onPress={this._signup.bind(this)} />
+                            <LinkButton
+                                style={formStyle.button}
+                                text={'cancel'}
+                                onPress={this._cancel.bind(this)} />
                         </View>
                     </View>
                 </KeyboardScrollView>
+                <Alert ref={inst => {this.alertInstance = inst}} />
             </Modal>
         )
     }
@@ -174,7 +171,7 @@ const style = StyleSheet.create({
 
 const headerStyle = StyleSheet.create({
     container: {
-        height: 200,
+        flex: 1,
         alignSelf: 'stretch',
         backgroundColor: 'white',
         paddingTop: 40,
@@ -193,16 +190,17 @@ const headerStyle = StyleSheet.create({
 
 const formStyle = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1.5,
+        alignSelf: 'stretch',
         alignItems: 'center',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
     },
     input: {
-        width: 280,
+        width: '80%',
         marginTop: 5
     },
     button: {
-        width: 280,
+        width: '80%',
         marginTop: 10
     }
 })

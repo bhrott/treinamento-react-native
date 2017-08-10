@@ -55,19 +55,16 @@ export default class LoginPage extends React.Component {
     }
 
     async _signIn() {
-        Alert.show('HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue')
-        return
-
         if (!this._validateForm()) {
             return
         }
 
         try {
             await SignInUserWithEmailAndPassword(this.state.email, this.state.password)
-            alert(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
+            Alert.getGlobalInstance().showSuccess(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
         } catch (error) {
             this._clearPassword()
-            alert(error.message)            
+            Alert.getGlobalInstance().showError(error.message)       
         }
     }
 
@@ -98,7 +95,7 @@ export default class LoginPage extends React.Component {
         this._closeAccountModal()
 
         setTimeout(() => {
-            alert('signup success!')
+            Alert.getGlobalInstance().showSuccess('Signin Sucess =)')
         }, 1000);
     }
 
@@ -196,11 +193,11 @@ const formStyle = StyleSheet.create({
         backgroundColor: ColorPalette.white,
     },
     input: {
-        width: 280,
+        width: '80%',
         marginTop: 5
     },
     button: {
-        width: 280,
+        width: '80%',
         marginTop: 5
     }
 })

@@ -41,7 +41,7 @@ export default class App extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <RootNavigation ref={nav => { this.navigator = nav }} />
-        <Alert />
+        <Alert ref={alert => Alert.setAsGlobalInstance(alert)} />
       </View>
     )
   }
