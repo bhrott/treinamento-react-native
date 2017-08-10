@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-    View,
-    Text
+  View,
+  Text
 } from 'react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
@@ -14,28 +14,32 @@ global.settings = AppSettings
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      loaded: false
-    }
   }
 
   async componentDidMount() {
-      await Font.loadAsync({
-          'abel-regular': require('./assets/fonts/Abel-Regular.ttf'),
-      });
+    await this._config()
+  }
 
-      Firebase.initialize()
+  async _config() {
+    await Font.loadAsync({
+      'abel-regular': require('./assets/fonts/Abel-Regular.ttf'),
+    });
 
-      this.setState({
-        loaded: true
-      })
+    Firebase.initialize()
+
+    setTimeout(() => {
+      this._goToLogin()
+    }, 2000);
+  }
+
+  async _goToLogin() {
+    this.navigator && this.navigator.dispatch({ type: 'Navigation/NAVIGATE', routeName: 'Login'})
   }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <RootNavigation />
+        <RootNavigation ref={nav => { this.navigator = nav }} />
       </View>
     )
   }

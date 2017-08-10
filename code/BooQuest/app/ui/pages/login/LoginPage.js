@@ -24,7 +24,8 @@ import CreateAccountModal from './CreateAccountModal'
 
 export default class LoginPage extends React.Component {
     static navigationOptions = {
-        header: null
+        header: null,
+        gesturesEnabled: false
     }
 
     constructor(props) {
