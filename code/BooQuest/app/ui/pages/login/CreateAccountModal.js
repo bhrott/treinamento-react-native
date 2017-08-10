@@ -58,9 +58,9 @@ export default class CreateAccountModal extends React.Component {
         }
 
         try {
-            let user = await SignUpUser(this.state.email, this.state.password)
+            await SignUpUser(this.state.email, this.state.password)
             
-            this.props.onSignup({ user })
+            this.props.onSignup()
             this._resetState()
         }
         catch (error) {

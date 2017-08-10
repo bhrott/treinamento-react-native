@@ -15,11 +15,18 @@ import {
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { TextValidator } from 'boo-core'
-import { SignInUserWithEmailAndPassword } from 'boo-domain'
+import { 
+    SignInUserWithEmailAndPassword,
+    LoggedUser
+} from 'boo-domain'
 
 import CreateAccountModal from './CreateAccountModal'
 
 export default class LoginPage extends React.Component {
+    static navigationOptions = {
+        header: null
+    }
+
     constructor(props) {
         super(props)
 
@@ -51,8 +58,8 @@ export default class LoginPage extends React.Component {
         }
 
         try {
-            const user = await SignInUserWithEmailAndPassword(this.state.email, this.state.password)
-            alert(`Signin success (uid: ${user.uid})`)
+            await SignInUserWithEmailAndPassword(this.state.email, this.state.password)
+            alert(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
         } catch (error) {
             this._clearPassword()
             alert(error.message)            
@@ -82,7 +89,7 @@ export default class LoginPage extends React.Component {
         this._closeAccountModal()
     }
 
-    _onSignupSuccess(user) {
+    _onSignupSuccess() {
         this._closeAccountModal()
 
         setTimeout(() => {
@@ -104,7 +111,7 @@ export default class LoginPage extends React.Component {
                 style={styles.scrollView}>
                 <View style={styles.container}>
                     <View style={logoStyle.container}>
-                        <Image source={require('./img/logo.png')} />
+                        <Image source={require('../img/logo.png')} />
                         <View>
                             <Text style={logoStyle.title}>
                                 BOO QUEST

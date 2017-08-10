@@ -4,11 +4,12 @@ import {
     Text
 } from 'react-native'
 import { Font } from 'expo'
-import { LoginPage } from 'boo-ui/pages'
+import { RootNavigation } from 'boo-ui/navigation'
 import { Firebase } from 'boo-core'
 
 import AppSettings from './app.settings'
 global.settings = AppSettings
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -32,13 +33,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.loaded) {
-      return (<LoginPage />)
-    }
-
     return (
       <View style={{ flex: 1 }}>
-        <Text>Loading...</Text>
+        <RootNavigation />
       </View>
     )
   }

@@ -1,9 +1,10 @@
 import { Firebase } from 'boo-core'
+import SignInUserWithEmailAndPassword from './SignInUserWithEmailAndPassword'
 
 export default async (email, password) => {
     try {
         const user = await Firebase.getInstance().auth().createUserWithEmailAndPassword(email, password)
-        return user.toJSON()
+        await SignInUserWithEmailAndPassword(email, password)
     }
     catch (error) {
         let message = ""

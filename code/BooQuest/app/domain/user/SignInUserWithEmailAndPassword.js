@@ -1,9 +1,12 @@
 import { Firebase } from 'boo-core'
+import LoggedUser from './LoggedUser'
 
 export default async (email, password) => {
     try {
         let user = await Firebase.getInstance().auth().signInWithEmailAndPassword(email, password)
-        return user.toJSON()
+
+        let loggedUser = LoggedUser.createFromFirebaseUserJSON(user.toJSON())
+        LoggedUser.setCurrent(loggedUser)
     } catch (error) {
         let message = ''
 
