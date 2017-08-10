@@ -9,6 +9,7 @@ import PrimaryButton from './primary-button/PrimaryButton'
 import LinkButton from './link-button/LinkButton'
 import KeyboardScrollView from './keyboard-scroll-view/KeyboardScrollView'
 import Email from './email/Email'
+import Alert from './alert/Alert'
 
 module.exports = {
     Text,
@@ -17,5 +18,6 @@ module.exports = {
     PrimaryButton,
     LinkButton,
     KeyboardScrollView,
-    Email
+    Email,
+    Alert
 }

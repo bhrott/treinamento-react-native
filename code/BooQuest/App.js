@@ -5,6 +5,7 @@ import {
 } from 'react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
+import { Alert } from 'boo-ui/components'
 import { Firebase } from 'boo-core'
 
 import AppSettings from './app.settings'
@@ -29,7 +30,7 @@ export default class App extends React.Component {
 
     setTimeout(() => {
       this._goToLogin()
-    }, 2000);
+    }, 1000);
   }
 
   async _goToLogin() {
@@ -40,6 +41,7 @@ export default class App extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <RootNavigation ref={nav => { this.navigator = nav }} />
+        <Alert />
       </View>
     )
   }

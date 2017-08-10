@@ -7,7 +7,7 @@ import {
 export default class BooText extends React.Component {
     render() {
         return (
-            <Text style={[style.text, this.props.style]}>
+            <Text {...this.props} style={[style.text, this.props.style]}>
                 {this.props.children}
             </Text>
         )

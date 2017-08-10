@@ -11,7 +11,8 @@ import {
     Password,
     PrimaryButton,
     LinkButton,
-    KeyboardScrollView
+    KeyboardScrollView,
+    Alert
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { TextValidator } from 'boo-core'
@@ -54,6 +55,9 @@ export default class LoginPage extends React.Component {
     }
 
     async _signIn() {
+        Alert.show('HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue HueHue')
+        return
+
         if (!this._validateForm()) {
             return
         }
