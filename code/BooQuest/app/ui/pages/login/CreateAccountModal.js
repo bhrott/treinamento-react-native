@@ -174,7 +174,7 @@ const headerStyle = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         backgroundColor: 'white',
-        paddingTop: 40,
+        paddingTop: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },

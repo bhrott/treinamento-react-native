@@ -1,7 +1,9 @@
 import React from 'react'
 import {
   View,
-  Text
+  Text,
+  StyleSheet,
+  Platform
 } from 'react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
@@ -39,10 +41,17 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <RootNavigation ref={nav => { this.navigator = nav }} />
         <Alert ref={alert => Alert.setAsGlobalInstance(alert)} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: (Platform.OS === 'ios') ? 20 : 0,
+  }
+})
