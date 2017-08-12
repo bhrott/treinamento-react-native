@@ -2,12 +2,12 @@
  * @providesModule boo-domain
  */
 
-import SignUpUser from './user/SignUpUser'
-import SignInUserWithEmailAndPassword from './user/SignInUserWithEmailAndPassword'
+import signUpUser from './user/signUpUser'
+import signInUserWithEmailAndPassword from './user/signInUserWithEmailAndPassword'
 import LoggedUser from './user/LoggedUser'
 
 module.exports = {
-    SignUpUser,
-    SignInUserWithEmailAndPassword,
+    signUpUser,
+    signInUserWithEmailAndPassword,
     LoggedUser
 }

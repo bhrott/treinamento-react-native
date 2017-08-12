@@ -7,12 +7,17 @@ import {
     LoadingPage
 } from 'boo-ui/pages'
 
+import HomeNavigation from './HomeNavigation'
+
 export default StackNavigator({
     Login: {
         screen: LoginPage
     },
     Loading: {
         screen: LoadingPage
+    },
+    Home: {
+        screen: HomeNavigation
     }
 }, {
     initialRouteName: 'Loading'

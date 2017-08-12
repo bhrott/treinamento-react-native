@@ -4,8 +4,16 @@
 
 import LoginPage from './login/LoginPage'
 import LoadingPage from './loading/LoadingPage'
+import FeedPage from './feed/FeedPage'
+import MyQuestsPage from './my-quests/MyQuestsPage'
+import MyAccountPage from './my-account/MyAccountPage'
+import SettingsPage from './settings/SettingsPage'
 
 module.exports = {
     LoginPage,
-    LoadingPage
+    LoadingPage,
+    FeedPage,
+    MyQuestsPage,
+    MyAccountPage,
+    SettingsPage
 }

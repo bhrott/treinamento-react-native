@@ -10,6 +10,7 @@ import LinkButton from './link-button/LinkButton'
 import KeyboardScrollView from './keyboard-scroll-view/KeyboardScrollView'
 import Email from './email/Email'
 import Alert from './alert/Alert'
+import TabBarIcon from './tab-bar-icon/TabBarIcon'
 
 module.exports = {
     Text,
@@ -19,5 +20,6 @@ module.exports = {
     LinkButton,
     KeyboardScrollView,
     Email,
-    Alert
+    Alert,
+    TabBarIcon
 }
