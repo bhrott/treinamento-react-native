@@ -11,6 +11,7 @@ import KeyboardScrollView from './keyboard-scroll-view/KeyboardScrollView'
 import Email from './email/Email'
 import Alert from './alert/Alert'
 import TabBarIcon from './tab-bar-icon/TabBarIcon'
+import ModalHeader from './modal-header/ModalHeader'
 
 module.exports = {
     Text,
@@ -21,5 +22,6 @@ module.exports = {
     KeyboardScrollView,
     Email,
     Alert,
-    TabBarIcon
+    TabBarIcon,
+    ModalHeader
 }

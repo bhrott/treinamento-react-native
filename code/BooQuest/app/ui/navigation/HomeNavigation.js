@@ -10,7 +10,7 @@ import {
 } from 'boo-ui/pages'
 import { ColorPalette } from 'boo-ui/utils'
 
-export default TabNavigator({
+const HomeNavigation = TabNavigator({
     Feed: {
         screen: FeedPage
     },
@@ -38,3 +38,9 @@ export default TabNavigator({
         }
 
     });
+
+HomeNavigation.navigationOptions = {
+    gesturesEnabled: false
+}
+
+export default HomeNavigation

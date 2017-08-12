@@ -2,7 +2,8 @@ import React from 'react'
 import {
     View,
     Image,
-    StyleSheet
+    StyleSheet,
+    TouchableHighlight
 } from 'react-native'
 import { 
     Text,
@@ -10,6 +11,7 @@ import {
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { LoggedUser } from 'boo-domain'
+import CreateNewQuestModal from './CreateNewQuestModal'
 
 export default class FeedPage extends React.Component {
     static navigationOptions = {
@@ -23,6 +25,26 @@ export default class FeedPage extends React.Component {
             />
         ),
     };
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            createNewQuestModalIsOpened: false
+        }
+    }
+
+    _openCreateNewQuestModal() {
+        this.setState({
+            createNewQuestModalIsOpened: true
+        })
+    }
+
+    _closeCreateNewQuestModal() {
+        this.setState({
+            createNewQuestModalIsOpened: false
+        })
+    }
 
     _renderHeader() {
         return (
@@ -43,10 +65,31 @@ export default class FeedPage extends React.Component {
         )
     }
 
+    _renderTitle() {
+        return (
+            <View style={titleStyles.container}>
+                <Text style={titleStyles.text}>lastest quests</Text>
+                <TouchableHighlight onPress={this._openCreateNewQuestModal.bind(this)}>
+                    <Image
+                        style={titleStyles.image}
+                        source={require('./img/add-new-quest.png')}
+                        resizeMode={'contain'}
+                    />
+                </TouchableHighlight>
+                
+            </View>
+        )
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 {this._renderHeader()}
+                {this._renderTitle()}
+
+                <CreateNewQuestModal 
+                    visible={this.state.createNewQuestModalIsOpened}
+                    onRequestClose={this._closeCreateNewQuestModal.bind(this)} />
             </View>
         )
     }
@@ -101,6 +144,27 @@ const headerNotificationStyles = StyleSheet.create({
         right: 0,
         fontSize: 12,
         color: ColorPalette.white
+    }
+})
+
+const titleStyles = StyleSheet.create({
+    container: {
+        height: 35,
+        width: '90%',
+        marginTop: 10,
+        borderColor: ColorPalette.grayLight,
+        borderBottomWidth: 1
+    },
+    text: {
+        color: ColorPalette.greenPrimary,
+        fontSize: 22
+    },
+    image: {
+        height: 27,
+        width: 27,
+        position: 'absolute',
+        bottom: 5,
+        right: 0
     }
 })
 
