@@ -4,6 +4,7 @@ export default {
     white: 'white',
     redError: 'red',
     grayDark: '#4F4F4F',
-    grayLight: '#E0E0E0',
+    grayLight: '#BDBDBD',
+    grayUltraLight: '#E0E0E0',
     black: 'black'
 }

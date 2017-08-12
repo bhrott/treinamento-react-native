@@ -35,7 +35,7 @@ ModalHeader.propTypes = {
 }
 
 ModalHeader.defaultProps = {
-    height: 180
+    height: 150
 }
 
 const styles = StyleSheet.create({
