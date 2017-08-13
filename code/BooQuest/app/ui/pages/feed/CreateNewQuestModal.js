@@ -16,7 +16,11 @@ import {
     Switch,
     Alert
 } from 'boo-ui/components'
-import { generateShareCode } from 'boo-domain'
+import { TextValidator } from 'boo-core'
+import { 
+    generateShareCode,
+    createNewQuest
+} from 'boo-domain'
 import { ColorPalette } from 'boo-ui/utils'
 import PropTypes from 'prop-types'
 
@@ -37,7 +41,8 @@ export default class CreateNewQuestModal extends React.Component {
 
             // form validation
             titleInvalid: false,
-            descriptionInvalid: false
+            descriptionInvalid: false,
+            shareCodeInvalid: true
         }
     }
 
@@ -59,14 +64,58 @@ export default class CreateNewQuestModal extends React.Component {
             const shareCode = await generateShareCode()
 
             this.setState({
-                shareCode
+                shareCode,
+                shareCodeInvalid: false
             })
         } catch (error) {
-            Alert.getGlobalInstance().showError(error.message)
+            this.alertInstance.showError(error.message)
 
             this.setState({
-                shareCode: 'error =('
+                shareCode: 'error =(, trying again...'
             })
+
+            setTimeout(() => {
+                this._loadShareCode()
+            }, 2000);
+        }
+    }
+
+    _validate() {
+        let newState = {
+            titleInvalid: TextValidator.isNullOrEmpty(this.state.title),
+            descriptionInvalid: TextValidator.isNullOrEmpty(this.state.description)
+        }
+
+        if (newState.titleInvalid || newState.descriptionInvalid) {
+            this.setState(newState)
+            return false
+        }
+
+        if (this.state.shareCodeInvalid) {
+            this.alertInstance.showError('Wait until share code is loaded...')
+            return false
+        }
+
+        return true
+    }
+
+    async _send() {
+        if (!this._validate()) {
+            return
+        }
+
+        try {
+            const questData = {
+                title: this.state.title,
+                description: this.state.description,
+                isPublic: this.state.isPublic,
+                shareCode: this.state.shareCode
+            }
+
+            await createNewQuest(questData)
+            this.props.onComplete(questData)
+        } catch (error) {
+            this.alertInstance.showError(error.message)
         }
     }
 
@@ -126,7 +175,7 @@ export default class CreateNewQuestModal extends React.Component {
                             <PrimaryButton
                                 style={formStyle.button}
                                 text={'create'}
-                                onPress={() => { }} />
+                                onPress={this._send.bind(this)} />
                             <LinkButton
                                 style={formStyle.button}
                                 text={'cancel'}
@@ -135,6 +184,7 @@ export default class CreateNewQuestModal extends React.Component {
 
                     </View>
                 </KeyboardScrollView>
+                <Alert ref={ alert => {this.alertInstance = alert} } />
             </Modal>
         )
     }
@@ -142,11 +192,13 @@ export default class CreateNewQuestModal extends React.Component {
 
 CreateNewQuestModal.propTypes = {
     visible: PropTypes.bool.isRequired,
-    onRequestClose: PropTypes.func
+    onRequestClose: PropTypes.func,
+    onComplete: PropTypes.func
 }
 
 CreateNewQuestModal.defaultProps = {
-    onRequestClose: () => { }
+    onRequestClose: () => { },
+    onComplete: (questData) => { }
 }
 
 

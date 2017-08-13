@@ -1,12 +1,12 @@
-let currentLoggedUser = null
+global.__loggedUser = null
 
 export default class LoggedUser {
     static getCurrent() {
-        return currentLoggedUser
+        return global.__loggedUser
     }
 
     static setCurrent(newLoggedUser) {
-        currentLoggedUser = newLoggedUser
+        global.__loggedUser = newLoggedUser
     }
 
     static createFromFirebaseUserJSON(user) {

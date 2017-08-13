@@ -32,7 +32,4 @@ export default async () => {
             message: 'An erro occurs when we try to generate the share code.'
         }
     }
-
-
-    
 }

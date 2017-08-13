@@ -7,11 +7,15 @@ import signInUserWithEmailAndPassword from './user/signInUserWithEmailAndPasswor
 import LoggedUser from './user/LoggedUser'
 
 import generateShareCode from './quest/generateShareCode'
+import createNewQuest from './quest/createNewQuest'
+import PublicQuestListener from './quest/PublicQuestListener'
 
 module.exports = {
     signUpUser,
     signInUserWithEmailAndPassword,
     LoggedUser,
 
-    generateShareCode
+    generateShareCode,
+    createNewQuest,
+    PublicQuestListener
 }

@@ -8,6 +8,7 @@ export default async (email, password) => {
         let loggedUser = LoggedUser.createFromFirebaseUserJSON(user.toJSON())
         LoggedUser.setCurrent(loggedUser)
     } catch (error) {
+        console.log(error)
         let message = ''
 
         switch (error.code) {
