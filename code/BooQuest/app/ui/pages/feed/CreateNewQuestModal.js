@@ -13,8 +13,10 @@ import {
     LinkButton,
     Input,
     KeyboardScrollView,
-    Switch
+    Switch,
+    Alert
 } from 'boo-ui/components'
+import { generateShareCode } from 'boo-domain'
 import { ColorPalette } from 'boo-ui/utils'
 import PropTypes from 'prop-types'
 
@@ -31,7 +33,7 @@ export default class CreateNewQuestModal extends React.Component {
             title: '',
             description: '',
             isPublic: false,
-            shareCode: '',
+            shareCode: 'carregando...',
 
             // form validation
             titleInvalid: false,
@@ -52,13 +54,30 @@ export default class CreateNewQuestModal extends React.Component {
         this.setState(nextState)
     }
 
+    async _loadShareCode() {
+        try {
+            const shareCode = await generateShareCode()
+
+            this.setState({
+                shareCode
+            })
+        } catch (error) {
+            Alert.getGlobalInstance().showError(error.message)
+
+            this.setState({
+                shareCode: 'error =('
+            })
+        }
+    }
+
     render() {
         return (
             <Modal
                 animationType={"slide"}
                 transparent={false}
                 visible={this.props.visible}
-                onRequestClose={this._cancel.bind(this)}>
+                onRequestClose={this._cancel.bind(this)}
+                onShow={this._loadShareCode.bind(this)}>
                 <KeyboardScrollView>
                     <View style={styles.container}>
                         <ModalHeader
@@ -73,7 +92,7 @@ export default class CreateNewQuestModal extends React.Component {
                                 onChangeText={val => this._onChangeField('title', val)}
                                 value={this.state.title} />
                             <Input
-                                placeholder={'description (500)'}
+                                placeholder={'description (optional, 500)'}
                                 style={[formStyle.input, { height: 110 }]}
                                 multiline={true}
                                 numberOfLines={4}
@@ -93,7 +112,7 @@ export default class CreateNewQuestModal extends React.Component {
                                             share code
                                         </Text>
                                         <Text style={[shareCodeStyle.text, {fontSize: 18}]}>
-                                            ABC-123-CDE
+                                            {this.state.shareCode}
                                         </Text>
                                     </View>
                                     <View style={shareCodeStyle.imageContainer}>
