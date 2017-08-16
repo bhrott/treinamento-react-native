@@ -34,9 +34,14 @@ export default class LoginPage extends React.Component {
 
         this.state = {
             createAccountModalIsVisible: false,
+
+            // form
             email: 'ben-hur@cwi.com.br',
             password: 'abc123',
 
+            inLoading: false,
+
+            // form validation
             emailInvalid: false,
             passwordInvalid: false
         }
@@ -60,13 +65,15 @@ export default class LoginPage extends React.Component {
         }
 
         try {
+            this.setState({ inLoading: true })
+            
             await signInUserWithEmailAndPassword(this.state.email, this.state.password)
-            //Alert.getGlobalInstance().showSuccess(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
-            this.props.navigation.navigate('Home')
+            this._goToHome()
         } catch (error) {
-            console.log(error)
             this._clearPassword()
             Alert.getGlobalInstance().showError(error.message)       
+        } finally {
+            this.setState({ inLoading: false })
         }
     }
 
@@ -97,7 +104,7 @@ export default class LoginPage extends React.Component {
         this._closeAccountModal()
 
         setTimeout(() => {
-            Alert.getGlobalInstance().showSuccess('Signin Sucess =)')
+            this._goToHome()
         }, 1000);
     }
 
@@ -107,6 +114,10 @@ export default class LoginPage extends React.Component {
         state[`${name}Invalid`] = false
 
         this.setState(state)
+    }
+
+    _goToHome() {
+        this.props.navigation.navigate('Home')
     }
 
     render() {
@@ -138,6 +149,7 @@ export default class LoginPage extends React.Component {
                         />
                         <PrimaryButton
                             style={formStyle.button}
+                            inLoading={this.state.inLoading}
                             text='sign in'
                             onPress={this._signIn.bind(this)}
                         />

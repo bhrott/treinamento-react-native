@@ -37,6 +37,8 @@ export default class CreateAccountModal extends React.Component {
             password: '',
             confirmPassword: '',
 
+            inLoading: false,
+
             // form validation
             emailInvalid: false,
             passwordInvalid: false,
@@ -61,6 +63,8 @@ export default class CreateAccountModal extends React.Component {
         }
 
         try {
+            this.setState({ inLoading: true })
+
             await signUpUser(this.state.email, this.state.password)
 
             this.props.onSignup()
@@ -69,6 +73,9 @@ export default class CreateAccountModal extends React.Component {
         catch (error) {
             this._clearPasswords()
             this.alertInstance.showError(error.message)
+        }
+        finally {
+            this.setState({ inLoading: false })
         }
     }
 
@@ -82,21 +89,15 @@ export default class CreateAccountModal extends React.Component {
             emailInvalid: TextValidator.isNullOrEmpty(this.state.email),
             passwordInvalid: TextValidator.isNullOrEmpty(this.state.password),
             confirmPasswordInvalid:
-            TextValidator.isNullOrEmpty(this.state.confirmPassword)
-            || this.state.password != this.state.confirmPassword
+                TextValidator.isNullOrEmpty(this.state.confirmPassword)
+                || this.state.password != this.state.confirmPassword
         }
 
         this.setState(newState)
 
-        for (var k in newState) {
-            if (newState.hasOwnProperty(k)) {
-                if (newState[k] === true) {
-                    return false
-                }
-            }
-        }
+        const hasInvalidProp = Object.keys(newState).find(key => newState[key] === true)
 
-        return true
+        return !hasInvalidProp
     }
 
     _onChangeField(name, val) {
@@ -141,6 +142,7 @@ export default class CreateAccountModal extends React.Component {
                                 value={this.state.confirmPassword} />
                             <PrimaryButton
                                 style={formStyle.button}
+                                inLoading={this.state.inLoading}
                                 text={'sign up'}
                                 onPress={this._signup.bind(this)} />
                             <LinkButton
