@@ -106,10 +106,6 @@ export default class CreateAccountModal extends React.Component {
         this.setState(state)
     }
 
-    _removeAlert() {
-
-    }
-
     render() {
         return (
             <Modal

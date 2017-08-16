@@ -12,13 +12,11 @@ export default class LoggedUser {
     static createFromFirebaseUserJSON(user) {
         return new LoggedUser(
                 user.uid, 
-                user.email, 
-                user.authToken)
+                user.email)
     }
 
-    constructor(uid, email, authToken) {
+    constructor(uid, email) {
         this.uid = uid
         this.email = email
-        this.authToken = authToken
     }
 }
