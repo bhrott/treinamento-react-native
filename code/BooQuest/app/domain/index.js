@@ -2,12 +2,20 @@
  * @providesModule boo-domain
  */
 
-import SignUpUser from './user/SignUpUser'
-import SignInUserWithEmailAndPassword from './user/SignInUserWithEmailAndPassword'
+import signUpUser from './user/signUpUser'
+import signInUserWithEmailAndPassword from './user/signInUserWithEmailAndPassword'
 import LoggedUser from './user/LoggedUser'
 
+import generateShareCode from './quest/generateShareCode'
+import createNewQuest from './quest/createNewQuest'
+import PublicQuestListener from './quest/PublicQuestListener'
+
 module.exports = {
-    SignUpUser,
-    SignInUserWithEmailAndPassword,
-    LoggedUser
+    signUpUser,
+    signInUserWithEmailAndPassword,
+    LoggedUser,
+
+    generateShareCode,
+    createNewQuest,
+    PublicQuestListener
 }

@@ -17,7 +17,7 @@ import {
 import { ColorPalette } from 'boo-ui/utils'
 import { TextValidator } from 'boo-core'
 import { 
-    SignInUserWithEmailAndPassword,
+    signInUserWithEmailAndPassword,
     LoggedUser
 } from 'boo-domain'
 
@@ -34,8 +34,8 @@ export default class LoginPage extends React.Component {
 
         this.state = {
             createAccountModalIsVisible: false,
-            email: '',
-            password: '',
+            email: 'ben-hur@cwi.com.br',
+            password: 'abc123',
 
             emailInvalid: false,
             passwordInvalid: false
@@ -60,9 +60,11 @@ export default class LoginPage extends React.Component {
         }
 
         try {
-            await SignInUserWithEmailAndPassword(this.state.email, this.state.password)
-            Alert.getGlobalInstance().showSuccess(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
+            await signInUserWithEmailAndPassword(this.state.email, this.state.password)
+            //Alert.getGlobalInstance().showSuccess(`Signin success (uid: ${LoggedUser.getCurrent().uid})`)
+            this.props.navigation.navigate('Home')
         } catch (error) {
+            console.log(error)
             this._clearPassword()
             Alert.getGlobalInstance().showError(error.message)       
         }
