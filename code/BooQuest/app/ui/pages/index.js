@@ -8,7 +8,6 @@ import FeedPage from './feed/FeedPage'
 import MyQuestsPage from './my-quests/MyQuestsPage'
 import MyAccountPage from './my-account/MyAccountPage'
 import SettingsPage from './settings/SettingsPage'
-import QuestDetailModal from './quest-detail/QuestDetailModal'
 
 module.exports = {
     LoginPage,
@@ -16,6 +15,5 @@ module.exports = {
     FeedPage,
     MyQuestsPage,
     MyAccountPage,
-    SettingsPage,
-    QuestDetailModal
+    SettingsPage
 }

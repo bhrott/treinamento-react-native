@@ -13,6 +13,7 @@ import Alert from './alert/Alert'
 import TabBarIcon from './tab-bar-icon/TabBarIcon'
 import ModalHeader from './modal-header/ModalHeader'
 import Switch from './switch/Switch'
+import QuestShareCode from './quest-share-code/QuestShareCode'
 
 module.exports = {
     Text,
@@ -25,5 +26,6 @@ module.exports = {
     Alert,
     TabBarIcon,
     ModalHeader,
-    Switch
+    Switch,
+    QuestShareCode
 }

@@ -14,7 +14,8 @@ import {
     Input,
     KeyboardScrollView,
     Switch,
-    Alert
+    Alert,
+    QuestShareCode
 } from 'boo-ui/components'
 import { TextValidator } from 'boo-core'
 import { 
@@ -154,24 +155,7 @@ export default class CreateNewQuestModal extends React.Component {
                                 isOn={this.state.isPublic}
                                 onValueChange={val => this._onChangeField('isPublic', val)}
                             />
-                            <View style={shareCodeStyle.container}>
-                                <View style={shareCodeStyle.content}>
-                                    <View style={shareCodeStyle.textContainer}>
-                                        <Text style={[shareCodeStyle.text, {fontSize: 12}]}>
-                                            share code
-                                        </Text>
-                                        <Text style={[shareCodeStyle.text, {fontSize: 18}]}>
-                                            {this.state.shareCode}
-                                        </Text>
-                                    </View>
-                                    <View style={shareCodeStyle.imageContainer}>
-                                        <Image
-                                            source={require('./img/copy.png')}
-                                            resizeMode={'contain'}
-                                        />
-                                    </View>
-                                </View>
-                            </View>
+                            <QuestShareCode code={this.state.shareCode} />
                             <PrimaryButton
                                 style={formStyle.button}
                                 text={'create'}
@@ -221,31 +205,5 @@ const formStyle = StyleSheet.create({
     button: {
         width: '100%',
         marginTop: 10
-    }
-})
-
-const shareCodeStyle = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: 50,
-        backgroundColor: ColorPalette.grayLight
-    },
-    content: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: 10
-    },
-    textContainer: {
-        flex: 3
-    },
-    text: {
-        color: ColorPalette.white
-    },
-    imageContainer: {
-        flex: 1,
-        alignItems: 'flex-end',
-        paddingRight: 10
     }
 })

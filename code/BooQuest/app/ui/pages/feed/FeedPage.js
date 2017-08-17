@@ -17,6 +17,7 @@ import {
     PublicQuestListener
 } from 'boo-domain'
 import CreateNewQuestModal from './CreateNewQuestModal'
+import QuestDetailModal from '../quest-detail/QuestDetailModal'
 
 export default class FeedPage extends React.Component {
     static navigationOptions = {
@@ -36,7 +37,10 @@ export default class FeedPage extends React.Component {
 
         this.state = {
             createNewQuestModalIsOpened: false,
-            publicQuests: []
+            publicQuests: [],
+
+            questDetailModalIsVisible: false,
+            currentQuestDetail: null
         }
     }
 
@@ -76,7 +80,17 @@ export default class FeedPage extends React.Component {
     }
 
     _goToDetail(quest) {
-        alert(quest.key)
+        this.setState({
+            currentQuestDetail: quest,
+            questDetailModalIsVisible: true
+        })
+    }
+
+    _closeDetail() {
+        this.setState({
+            currentQuestDetail: null,
+            questDetailModalIsVisible: true
+        })
     }
 
     _renderHeader() {
@@ -177,6 +191,11 @@ export default class FeedPage extends React.Component {
                     visible={this.state.createNewQuestModalIsOpened}
                     onRequestClose={this._closeCreateNewQuestModal.bind(this)}
                     onComplete={this._onQuestCreated.bind(this)} />
+
+                <QuestDetailModal
+                    quest={this.state.currentQuestDetail}
+                    visible={this.state.questDetailModalIsVisible}
+                    onRequestClose={this._closeDetail.bind(this)} />
             </View>
         )
     }
