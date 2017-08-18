@@ -20,7 +20,8 @@ export default StackNavigator({
         screen: QuestDetailPage,
         navigationOptions: {
             header: null,
-            gesturesEnabled: false
+            gesturesEnabled: false,
+            foo: true
         }
     }
 }, {

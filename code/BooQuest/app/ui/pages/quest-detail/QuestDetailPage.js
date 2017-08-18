@@ -31,7 +31,7 @@ export default class QuestDetailPage extends React.Component {
     }
 
     _goBack() {
-        this.props.navigation.dispatch(NavigationActions.back())        
+        this.props.navigation.goBack()        
     }
 
     _renderHeader() {
