@@ -13,7 +13,8 @@ import PropTypes from 'prop-types'
 import { ColorPalette } from 'boo-ui/utils'
 import { 
     Text,
-    QuestShareCode
+    QuestShareCode,
+    Alert
 } from 'boo-ui/components'
 
 export default class QuestDetailPage extends React.Component {
@@ -34,6 +35,10 @@ export default class QuestDetailPage extends React.Component {
         this.props.navigation.goBack()        
     }
 
+    _onCopiedShareCode({ message }) {
+        Alert.getGlobalInstance().showSuccess(message)
+    }
+
     _renderHeader() {
         return (
             <View style={headerStyles.container}>
@@ -48,6 +53,7 @@ export default class QuestDetailPage extends React.Component {
                     onPress={this._goBack.bind(this)}
                     style={headerStyles.backButton}>
                     <Image
+                        style={headerStyles.backButtonImage}
                         source={require('./img/back.png')}
                         resizeMode={'contain'}/>
                 </TouchableOpacity>
@@ -68,7 +74,9 @@ export default class QuestDetailPage extends React.Component {
     _renderShareCode() {
         return (
             <View style={shareCodeStyle.container}>
-                <QuestShareCode code={this.quest.shareCode} />
+                <QuestShareCode 
+                    code={this.quest.shareCode}
+                    onCopiedToClipboard={this._onCopiedShareCode.bind(this)} />
             </View>
         )
     }
@@ -117,12 +125,17 @@ const headerStyles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 44,
-        height: 44,
+        top: 5,
+        left: 5,
+        width: 50,
+        height: 50,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: 10
+    },
+    backButtonImage: {
+        width: '100%',
+        height: '100%'
     },
     content: {
         flex: 1,

@@ -120,6 +120,10 @@ export default class CreateNewQuestModal extends React.Component {
         }
     }
 
+    _onCopiedShareCode({ message }) {
+        this.alertInstance.showSuccess(message)
+    }
+
     render() {
         return (
             <Modal
@@ -155,7 +159,9 @@ export default class CreateNewQuestModal extends React.Component {
                                 isOn={this.state.isPublic}
                                 onValueChange={val => this._onChangeField('isPublic', val)}
                             />
-                            <QuestShareCode code={this.state.shareCode} />
+                            <QuestShareCode 
+                                onCopiedToClipboard={this._onCopiedShareCode.bind(this)}
+                                code={this.state.shareCode} />
                             <PrimaryButton
                                 style={formStyle.button}
                                 text={'create'}

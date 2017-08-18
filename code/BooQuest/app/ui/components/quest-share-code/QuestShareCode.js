@@ -2,21 +2,33 @@ import React from 'react'
 import {
     View,
     StyleSheet,
-    Image
+    Image,
+    Clipboard,
+    TouchableOpacity
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { ColorPalette } from 'boo-ui/utils'
 import Text from '../text/Text'
 
 export default class BooQuestShareCode extends React.Component {
+    _copyToClipboard() {
+        Clipboard.setString(this.props.code)
+        this.props.onCopiedToClipboard({
+            message: 'Share code copied to clipboard.'
+        })
+    }
+
     render() {
         return (
-            <View style={shareCodeStyle.container}>
+            <TouchableOpacity 
+                activeOpacity={0.5} 
+                style={shareCodeStyle.container}
+                onPress={this._copyToClipboard.bind(this)}>
                 <View style={shareCodeStyle.content}>
                     <View style={shareCodeStyle.textContainer}>
                         <Text style={[shareCodeStyle.text, { fontSize: 12 }]}>
                             share code
-                </Text>
+                        </Text>
                         <Text style={[shareCodeStyle.text, { fontSize: 18 }]}>
                             {this.props.code}
                         </Text>
@@ -28,13 +40,18 @@ export default class BooQuestShareCode extends React.Component {
                         />
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
 
 BooQuestShareCode.propTypes = {
-    code: PropTypes.string.isRequired
+    code: PropTypes.string.isRequired,
+    onCopiedToClipboard: PropTypes.func
+}
+
+BooQuestShareCode.defaultProps = {
+    onCopiedToClipboard: ({ message }) => {}
 }
 
 const shareCodeStyle = StyleSheet.create({
