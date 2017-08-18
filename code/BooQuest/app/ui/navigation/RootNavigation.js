@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     StackNavigator,
 } from 'react-navigation';
@@ -25,7 +26,11 @@ export default StackNavigator({
         }
     },
     Home: {
-        screen: HomeNavigation
+        screen: HomeNavigation,
+        navigationOptions: {
+            header: null,
+            gesturesEnabled: false
+        }
     }
 }, {
     initialRouteName: 'Loading'

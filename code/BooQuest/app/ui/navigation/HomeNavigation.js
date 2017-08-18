@@ -95,8 +95,4 @@ const HomeNavigation = TabNavigator({
 
     });
 
-HomeNavigation.navigationOptions = {
-    gesturesEnabled: false
-}
-
 export default HomeNavigation
