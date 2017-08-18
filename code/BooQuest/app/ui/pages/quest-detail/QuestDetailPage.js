@@ -11,16 +11,21 @@ import {
 import { NavigationActions } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ColorPalette } from 'boo-ui/utils'
-import { 
+import {
     Text,
     QuestShareCode,
     Alert
 } from 'boo-ui/components'
+import AnswerList from './AnswerList'
 
 export default class QuestDetailPage extends React.Component {
     constructor(props) {
         super(props)
         this.quest = this.props.navigation.state.params.quest
+
+        this.state = {
+            answerListOpened: false
+        }
     }
 
     componentDidMount() {
@@ -32,36 +37,45 @@ export default class QuestDetailPage extends React.Component {
     }
 
     _goBack() {
-        this.props.navigation.goBack()        
+        this.props.navigation.goBack()
     }
 
     _onCopiedShareCode({ message }) {
         Alert.getGlobalInstance().showSuccess(message)
     }
 
+    _openAnswers() {
+        this.setState({ answerListOpened: true })
+    }
+
+    _closeAnswers() {
+        this.setState({ answerListOpened: false })
+    }
+
     _renderHeader() {
         return (
             <View style={headerStyles.container}>
                 <View style={headerStyles.content}>
-                    <Image 
+                    <Image
                         source={require('./img/parchment.png')}
                         resizeMode={'contain'} />
                     <Text style={headerStyles.title}>{this.quest.title}</Text>
                 </View>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={this._goBack.bind(this)}
                     style={headerStyles.backButton}>
                     <Image
                         style={headerStyles.backButtonImage}
                         source={require('./img/back.png')}
-                        resizeMode={'contain'}/>
+                        resizeMode={'contain'} />
                 </TouchableOpacity>
             </View>
         )
     }
 
-    _renderDescription() {return (
+    _renderDescription() {
+        return (
             <View style={descriptionStyle.container}>
                 <ScrollView>
                     <Text
@@ -74,19 +88,30 @@ export default class QuestDetailPage extends React.Component {
     _renderShareCode() {
         return (
             <View style={shareCodeStyle.container}>
-                <QuestShareCode 
+                <QuestShareCode
                     code={this.quest.shareCode}
                     onCopiedToClipboard={this._onCopiedShareCode.bind(this)} />
             </View>
         )
     }
 
-    _renderAnswers() {
+    _renderAnswerAction() {
         return (
-            <TouchableOpacity style={answersStyle.container}>
+            <TouchableOpacity 
+                onPress={this._openAnswers.bind(this)}
+                style={answersStyle.container}>
                 <View style={answersStyle.divisor}></View>
                 <Text style={answersStyle.text}>Answers (0)</Text>
             </TouchableOpacity>
+        )
+    }
+
+    _renderAnswersList() {
+        return (
+            <AnswerList 
+                quest={this.quest}
+                opened={this.state.answerListOpened}
+                onRequestClose={this._closeAnswers.bind(this)} />
         )
     }
 
@@ -100,7 +125,8 @@ export default class QuestDetailPage extends React.Component {
                 {this._renderHeader()}
                 {this._renderDescription()}
                 {this._renderShareCode()}
-                {this._renderAnswers()}
+                {this._renderAnswerAction()}
+                {this._renderAnswersList()}
             </View>
         )
     }
