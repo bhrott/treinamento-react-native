@@ -3,7 +3,8 @@ import {
     View,
     StyleSheet,
     Image,
-    InteractionManager
+    InteractionManager,
+    BackHandler
 } from 'react-native'
 import {
     Text,
@@ -45,6 +46,18 @@ export default class LoginPage extends React.Component {
             emailInvalid: false,
             passwordInvalid: false
         }
+    }
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid.bind(this))
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid.bind(this))
+    }
+
+    _onBackAndroid() {
+        return true
     }
 
     _openAccountModal() {
