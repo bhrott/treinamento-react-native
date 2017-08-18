@@ -17,6 +17,7 @@ export default class BooInput extends React.Component {
             <TextInput
                 maxLength={50}
                 autoCorrect={false}
+                underlineColorAndroid={'transparent'}
                 {...this.props}
                 placeholderTextColor={placeholderColor}
                 style={[style.input, this.props.style, errorStyle]}

@@ -47,7 +47,6 @@ export default class BooQuestDetailModal extends React.Component {
                         style={descriptionStyle.text}>{this.props.quest.description || ''}</Text>
                 </ScrollView>
             </View>
-            
         )
     }
 
@@ -59,29 +58,11 @@ export default class BooQuestDetailModal extends React.Component {
         )
     }
 
-    _renderComments() {
-        const commentsStyle = StyleSheet.create({
-            container: {
-                width: '100%',
-                height: 60,
-                paddingTop: 10,
-                alignItems: 'center'
-            },
-            divisor: {
-                height: 1,
-                backgroundColor: ColorPalette.grayUltraLight,
-                width: '95%'
-            },
-            text: {
-                color: ColorPalette.grayLight,
-                marginTop: 15
-            }
-        })
-
+    _renderAnswers() {
         return (
-            <TouchableOpacity style={commentsStyle.container}>
-                <View style={commentsStyle.divisor}></View>
-                <Text style={commentsStyle.text}>Comments (0)</Text>
+            <TouchableOpacity style={answersStyle.container}>
+                <View style={answersStyle.divisor}></View>
+                <Text style={answersStyle.text}>Answers (0)</Text>
             </TouchableOpacity>
         )
     }
@@ -101,7 +82,7 @@ export default class BooQuestDetailModal extends React.Component {
                     {this._renderHeader()}
                     {this._renderDescription()}
                     {this._renderShareCode()}
-                    {this._renderComments()}
+                    {this._renderAnswers()}
                 </View>
             </Modal>
         )
@@ -167,5 +148,23 @@ const shareCodeStyle = StyleSheet.create({
     container: {
         paddingLeft: 20,
         paddingRight: 20
+    }
+})
+
+const answersStyle = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: 60,
+        paddingTop: 10,
+        alignItems: 'center'
+    },
+    divisor: {
+        height: 1,
+        backgroundColor: ColorPalette.grayUltraLight,
+        width: '95%'
+    },
+    text: {
+        color: ColorPalette.grayLight,
+        marginTop: 15
     }
 })
