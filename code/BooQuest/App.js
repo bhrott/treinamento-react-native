@@ -3,7 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform
+  Platform,
+  StatusBar
 } from 'react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
@@ -12,6 +13,10 @@ import { Firebase } from 'boo-core'
 
 import AppSettings from './app.settings'
 global.settings = AppSettings
+
+console.ignoredYellowBox = [
+  'Setting a timer'
+];
 
 
 export default class App extends React.Component {
@@ -23,10 +28,14 @@ export default class App extends React.Component {
     await this._config()
   }
 
+
+
   async _config() {
     await Font.loadAsync({
       'abel-regular': require('./assets/fonts/Abel-Regular.ttf'),
     });
+
+    StatusBar.setHidden(true)
 
     Firebase.initialize()
 
@@ -51,7 +60,6 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: (Platform.OS === 'ios') ? 20 : 0,
+    flex: 1
   }
 })

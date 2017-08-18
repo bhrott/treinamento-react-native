@@ -1,32 +1,28 @@
+import React from 'react'
 import {
     StackNavigator,
 } from 'react-navigation';
 
 import {
-    LoginPage,
-    LoadingPage
+    FeedPage,
+    QuestDetailPage
 } from 'boo-ui/pages'
 
-import HomeNavigation from './HomeNavigation'
-
 export default StackNavigator({
-    Login: {
-        screen: LoginPage,
+    Feed: {
+        screen: FeedPage,
         navigationOptions: {
             header: null,
             gesturesEnabled: false
         }
     },
-    Loading: {
-        screen: LoadingPage,
+    QuestDetail: {
+        screen: QuestDetailPage,
         navigationOptions: {
             header: null,
             gesturesEnabled: false
         }
-    },
-    Home: {
-        screen: HomeNavigation
     }
 }, {
-    initialRouteName: 'Loading'
-});
+    initialRouteName: 'Feed'
+})

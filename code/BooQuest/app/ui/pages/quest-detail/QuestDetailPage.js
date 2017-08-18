@@ -5,8 +5,10 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
-    ScrollView
+    ScrollView,
+    BackHandler
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ColorPalette } from 'boo-ui/utils'
 import { 
@@ -14,9 +16,22 @@ import {
     QuestShareCode
 } from 'boo-ui/components'
 
-export default class BooQuestDetailModal extends React.Component {
-    _cancel() {
-        this.props.onRequestClose()
+export default class QuestDetailPage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.quest = this.props.navigation.state.params.quest
+    }
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._goBack.bind(this))
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this._goBack.bind(this))
+    }
+
+    _goBack() {
+        this.props.navigation.dispatch(NavigationActions.back())        
     }
 
     _renderHeader() {
@@ -26,11 +41,11 @@ export default class BooQuestDetailModal extends React.Component {
                     <Image 
                         source={require('./img/parchment.png')}
                         resizeMode={'contain'} />
-                    <Text style={headerStyles.title}>{this.props.quest.title}</Text>
+                    <Text style={headerStyles.title}>{this.quest.title}</Text>
                 </View>
 
                 <TouchableOpacity 
-                    onPress={this._cancel.bind(this)}
+                    onPress={this._goBack.bind(this)}
                     style={headerStyles.backButton}>
                     <Image
                         source={require('./img/back.png')}
@@ -44,7 +59,7 @@ export default class BooQuestDetailModal extends React.Component {
             <View style={descriptionStyle.container}>
                 <ScrollView>
                     <Text
-                        style={descriptionStyle.text}>{this.props.quest.description || ''}</Text>
+                        style={descriptionStyle.text}>{this.quest.description || ''}</Text>
                 </ScrollView>
             </View>
         )
@@ -53,7 +68,7 @@ export default class BooQuestDetailModal extends React.Component {
     _renderShareCode() {
         return (
             <View style={shareCodeStyle.container}>
-                <QuestShareCode code={this.props.quest.shareCode} />
+                <QuestShareCode code={this.quest.shareCode} />
             </View>
         )
     }
@@ -68,30 +83,23 @@ export default class BooQuestDetailModal extends React.Component {
     }
 
     render() {
-        if (!this.props.quest) {
+        if (!this.quest) {
             return null
         }
 
         return (
-            <Modal
-                animationType={"fade"}
-                transparent={false}
-                visible={this.props.visible}
-                onRequestClose={this._cancel.bind(this)}>
-                <View style={styles.container}>
-                    {this._renderHeader()}
-                    {this._renderDescription()}
-                    {this._renderShareCode()}
-                    {this._renderAnswers()}
-                </View>
-            </Modal>
+            <View style={styles.container}>
+                {this._renderHeader()}
+                {this._renderDescription()}
+                {this._renderShareCode()}
+                {this._renderAnswers()}
+            </View>
         )
     }
 }
 
-BooQuestDetailModal.propTypes = {
-    quest: PropTypes.object,
-    onRequestClose: PropTypes.func.isRequired
+QuestDetailPage.propTypes = {
+    quest: PropTypes.object
 }
 
 const styles = StyleSheet.create({
@@ -105,11 +113,11 @@ const headerStyles = StyleSheet.create({
         width: '100%',
         height: 200,
         padding: 20,
-        paddingTop: 60
+        paddingTop: 40
     },
     backButton: {
         position: 'absolute',
-        top: 20,
+        top: 0,
         left: 0,
         width: 44,
         height: 44,

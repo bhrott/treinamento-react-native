@@ -7,10 +7,6 @@ import {
 import { ColorPalette } from 'boo-ui/utils'
 
 export default class LoadingPage extends React.Component {
-    static navigationOptions = {
-        header: null
-    }
-
     render() {
         return (
             <View style={style.container}>

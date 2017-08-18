@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     TabNavigator,
 } from 'react-navigation';
@@ -8,20 +9,71 @@ import {
     MyAccountPage,
     SettingsPage
 } from 'boo-ui/pages'
+
+import {
+    TabBarIcon
+} from 'boo-ui/components'
+
 import { ColorPalette } from 'boo-ui/utils'
+
+import FeedNavigation from './FeedNavigation'
 
 const HomeNavigation = TabNavigator({
     Feed: {
-        screen: FeedPage
+        screen: FeedNavigation,
+        navigationOptions: {
+            title: 'feed',
+            header: null,
+            showIcon: true,
+            tabBarIcon: ({ tintColor }) => (
+                <TabBarIcon
+                    source={require('./img/tab-icons/feed-tab-icon.png')}
+                    tintColor={tintColor}
+                />
+            ),
+        }
     },
     MyQuests: {
-        screen: MyQuestsPage
+        screen: MyQuestsPage,
+        navigationOptions: {
+            title: 'my quests',
+            header: null,
+            showIcon: true,
+            tabBarIcon: ({ tintColor }) => (
+                <TabBarIcon
+                    source={require('./img/tab-icons/my-quests-tab-icon.png')}
+                    tintColor={tintColor}
+                />
+            ),
+        }
     },
     MyAccount: {
-        screen: MyAccountPage
+        screen: MyAccountPage,
+        navigationOptions: {
+            title: 'account',
+            header: null,
+            showIcon: true,
+            tabBarIcon: ({ tintColor }) => (
+                <TabBarIcon
+                    source={require('./img/tab-icons/account-tab-icon.png')}
+                    tintColor={tintColor}
+                />
+            ),
+        }
     },
     Settings: {
-        screen: SettingsPage
+        screen: SettingsPage,
+        navigationOptions: {
+            title: 'settings',
+            header: null,
+            showIcon: true,
+            tabBarIcon: ({ tintColor }) => (
+                <TabBarIcon
+                    source={require('./img/tab-icons/settings-tab-icon.png')}
+                    tintColor={tintColor}
+                />
+            ),
+        }
     }
 }, {
         initialRouteName: 'Feed',
@@ -29,12 +81,16 @@ const HomeNavigation = TabNavigator({
         tabBarOptions: {
             activeTintColor: ColorPalette.greenPrimary,
             inactiveTintColor: ColorPalette.grayLight,
+            showIcon: true,
             labelStyle: {
-                fontSize: 12,
+                fontSize: 10,
             },
             style: {
                 backgroundColor: ColorPalette.white,
             },
+            indicatorStyle: {
+                backgroundColor: ColorPalette.white
+            }
         }
 
     });

@@ -24,7 +24,7 @@ TabBarIcon.propTypes = {
 
 const styles = StyleSheet.create({
     image: {
-        width: 26,
-        height: 26
+        width: 24,
+        height: 24
     }
 })

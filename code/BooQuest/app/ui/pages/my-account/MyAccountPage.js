@@ -10,18 +10,6 @@ import {
 } from 'boo-ui/components'
 
 export default class MyAccountPage extends React.Component {
-    static navigationOptions = {
-        title: 'my account',
-        header: null,
-        showIcon: true,
-        tabBarIcon: ({ tintColor }) => (
-            <TabBarIcon
-                source={require('./img/tab-icon.png')}
-                tintColor={tintColor}
-            />
-        ),
-    };
-
     render() {
         return (
             <View style={styles.container}>

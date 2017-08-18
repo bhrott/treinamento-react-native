@@ -17,30 +17,14 @@ import {
     PublicQuestListener
 } from 'boo-domain'
 import CreateNewQuestModal from './CreateNewQuestModal'
-import QuestDetailModal from '../quest-detail/QuestDetailModal'
 
 export default class FeedPage extends React.Component {
-    static navigationOptions = {
-        title: 'feed',
-        header: null,
-        showIcon: true,
-        tabBarIcon: ({ tintColor }) => (
-            <TabBarIcon
-                source={require('./img/tab-icon.png')}
-                tintColor={tintColor}
-            />
-        ),
-    };
-
     constructor(props) {
         super(props)
 
         this.state = {
             createNewQuestModalIsOpened: false,
-            publicQuests: [],
-
-            questDetailModalIsVisible: false,
-            currentQuestDetail: null
+            publicQuests: []
         }
     }
 
@@ -80,17 +64,7 @@ export default class FeedPage extends React.Component {
     }
 
     _goToDetail(quest) {
-        this.setState({
-            currentQuestDetail: quest,
-            questDetailModalIsVisible: true
-        })
-    }
-
-    _closeDetail() {
-        this.setState({
-            currentQuestDetail: null,
-            questDetailModalIsVisible: true
-        })
+        this.props.navigation.navigate('QuestDetail', { quest })
     }
 
     _renderHeader() {
@@ -116,9 +90,11 @@ export default class FeedPage extends React.Component {
         return (
             <View style={titleStyles.container}>
                 <Text style={titleStyles.text}>lastest quests</Text>
-                <TouchableOpacity onPress={this._openCreateNewQuestModal.bind(this)}>
+                <TouchableOpacity 
+                    style={titleStyles.newQuestButtonContainer}
+                    onPress={this._openCreateNewQuestModal.bind(this)}>
                     <Image
-                        style={titleStyles.image}
+                        style={titleStyles.newQuestButtonImage}
                         source={require('./img/add-new-quest.png')}
                         resizeMode={'contain'}
                     />
@@ -191,11 +167,6 @@ export default class FeedPage extends React.Component {
                     visible={this.state.createNewQuestModalIsOpened}
                     onRequestClose={this._closeCreateNewQuestModal.bind(this)}
                     onComplete={this._onQuestCreated.bind(this)} />
-
-                <QuestDetailModal
-                    quest={this.state.currentQuestDetail}
-                    visible={this.state.questDetailModalIsVisible}
-                    onRequestClose={this._closeDetail.bind(this)} />
             </View>
         )
     }
@@ -265,12 +236,16 @@ const titleStyles = StyleSheet.create({
         color: ColorPalette.greenPrimary,
         fontSize: 22
     },
-    image: {
+    newQuestButtonContainer: {
         height: 27,
         width: 27,
         position: 'absolute',
         bottom: 5,
         right: 0
+    },
+    newQuestButtonImage: {
+        height: '100%',
+        width: '100%'
     }
 })
 

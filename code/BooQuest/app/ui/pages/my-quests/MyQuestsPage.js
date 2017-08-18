@@ -10,18 +10,6 @@ import {
 } from 'boo-ui/components'
 
 export default class MyQuestsPage extends React.Component {
-    static navigationOptions = {
-        title: 'my quests',
-        header: null,
-        showIcon: true,
-        tabBarIcon: ({ tintColor }) => (
-            <TabBarIcon
-                source={require('./img/tab-icon.png')}
-                tintColor={tintColor}
-            />
-        ),
-    };
-
     render() {
         return (
             <View style={styles.container}>
