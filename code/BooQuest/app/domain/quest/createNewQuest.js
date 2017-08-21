@@ -16,7 +16,8 @@ const createNewQuest = async (model) => {
             title,
             description,
             shareCode,
-            owner: LoggedUser.getCurrent().uid
+            owner: LoggedUser.getCurrent().uid,
+            commentsCount: 0
         })
     } catch (error) {
         console.error(error)

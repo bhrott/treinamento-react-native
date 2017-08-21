@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar
 } from 'react-native'
+import Reactotron from 'reactotron-react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
 import { Alert } from 'boo-ui/components'
@@ -14,10 +15,11 @@ import { Firebase } from 'boo-core'
 import AppSettings from './app.settings'
 global.settings = AppSettings
 
+import './reactotron.config'
+
 console.ignoredYellowBox = [
   'Setting a timer'
 ];
-
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,8 +29,6 @@ export default class App extends React.Component {
   async componentDidMount() {
     await this._config()
   }
-
-
 
   async _config() {
     await Font.loadAsync({

@@ -101,7 +101,7 @@ export default class QuestDetailPage extends React.Component {
                 onPress={this._openAnswers.bind(this)}
                 style={answersStyle.container}>
                 <View style={answersStyle.divisor}></View>
-                <Text style={answersStyle.text}>Answers (0)</Text>
+                <Text style={answersStyle.text}>Answers ({this.quest.commentsCount})</Text>
             </TouchableOpacity>
         )
     }

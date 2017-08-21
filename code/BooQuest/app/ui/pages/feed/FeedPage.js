@@ -37,7 +37,7 @@ export default class FeedPage extends React.Component {
     }
 
     _onPublicQuestsChanged(publicQuests) {
-        const quests = Object.keys(publicQuests).map((key) => {
+        const quests = Object.keys(publicQuests || []).map((key) => {
             let parsed = publicQuests[key]
             parsed.key = key
             return parsed;
@@ -126,7 +126,7 @@ export default class FeedPage extends React.Component {
                     <View>
                         <View style={listItemCommentCountStyles.container}>
                             <View style={listItemCommentCountStyles.content}>
-                                <Text style={listItemCommentCountStyles.text}>0</Text>
+                                <Text style={listItemCommentCountStyles.text}>{item.commentsCount}</Text>
                                 <Image
                                     style={listItemCommentCountStyles.image}
                                     source={require('./img/comments-count.png')}

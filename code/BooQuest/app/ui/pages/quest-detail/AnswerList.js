@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types'
 import { Text } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
+import { QuestCommentsListener } from 'boo-domain' 
 
 const { height, width } = Dimensions.get('window')
 
@@ -19,7 +20,8 @@ export default class AnswerList extends React.Component {
         super(props)
 
         this.state = {
-            opened: false
+            opened: false,
+            comments: []
         }
 
         this.containerTopPosition = new Animated.Value(height)
@@ -29,6 +31,32 @@ export default class AnswerList extends React.Component {
         if (nextProps.opened !== this.state.opened) {
             this._reactToNewProps(nextProps)
         }
+
+        if (nextProps.opened) {
+            this._initializeListener()
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.commentsListener) {
+            this.commentsListener.unregister()
+        }
+    }
+
+    _initializeListener() {
+        this.commentsListener = new QuestCommentsListener(this.props.quest.shareCode, this._onReceiveComments.bind(this))
+    }
+
+    _onReceiveComments(comments) {
+        let list = Object.keys(comments || {}).map(key => {
+            let comment = comments[key]
+            comment.key = key
+            return comment
+        })
+
+        this.setState({
+            comments: list
+        })
     }
 
     _reactToNewProps(props) {
@@ -68,27 +96,11 @@ export default class AnswerList extends React.Component {
     }
 
     _renderBody() {
-        const bodyStyle = StyleSheet.create({
-            container: {
-                flex: 1,
-                width: '100%'
-            },
-            list: {
-
-            }
-        })
-
-        const listStyles = StyleSheet.create({
-            container: {
-                width: '90%'
-            }
-        })
-
         return (
             <View style={bodyStyle.container}>
                 <FlatList
                     style={listStyles.container}
-                    data={[]}
+                    data={this.state.comments}
                     keyExtractor={(item, index) => { return item.key }}
                     renderItem={this._renderListItem.bind(this)}
                 />
@@ -99,16 +111,20 @@ export default class AnswerList extends React.Component {
     _renderListItem({ item }) {
         const listItemStyle = StyleSheet.create({
             container: {
-                height: 100,
                 width: '100%',
-                borderColor: ColorPalette.grayLight,
-                borderBottomWidth: 1
+                borderColor: ColorPalette.grayUltraLight,
+                borderBottomWidth: 1,
+                paddingBottom: 5
+            },
+            author: {
+                color: ColorPalette.grayLight
             }
         })
 
         return (
             <View style={listItemStyle.container}>
-
+                <Text style={listItemStyle.author}>A blue zombie</Text>
+                <Text>{item.text}</Text>
             </View>
         )
     }
@@ -177,3 +193,16 @@ const headerStyle = StyleSheet.create({
     }
 })
 
+const bodyStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center'
+    }
+})
+
+const listStyles = StyleSheet.create({
+    container: {
+        width: '90%'
+    }
+})
