@@ -1,6 +1,6 @@
 export default {
     purplePrimary: '#413C58',
-    greenPrimary: '#A3C4BC',
+    greenPrimary: '#80AB82',//'#A3C4BC',
     white: 'white',
     redError: 'red',
     grayDark: '#4F4F4F',
