@@ -14,7 +14,7 @@ import TabBarIcon from './tab-bar-icon/TabBarIcon'
 import ModalHeader from './modal-header/ModalHeader'
 import Switch from './switch/Switch'
 import QuestShareCode from './quest-share-code/QuestShareCode'
-import LocalImage from './image/LocalImage'
+import LocalImage from './local-image/LocalImage'
 
 module.exports = {
     Text,

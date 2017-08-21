@@ -1,15 +1,14 @@
 import React from 'react'
 import { 
-    Image,
     StyleSheet
 } from 'react-native'
 import PropTypes from 'prop-types'
 
 export default class TabBarIcon extends React.Component {
     render() {
+        const Image = this.props.image
         return (
             <Image
-                source={this.props.source}
                 style={[styles.image, { tintColor: this.props.tintColor }]}
                 resizeMode={'contain'}
             />
@@ -18,7 +17,7 @@ export default class TabBarIcon extends React.Component {
 }
 
 TabBarIcon.propTypes = {
-    source: PropTypes.any.isRequired,
+    image: PropTypes.any.isRequired,
     tintColor: PropTypes.string.isRequired
 }
 

@@ -11,7 +11,8 @@ import {
 } from 'boo-ui/pages'
 
 import {
-    TabBarIcon
+    TabBarIcon,
+    LocalImage
 } from 'boo-ui/components'
 
 import { ColorPalette } from 'boo-ui/utils'
@@ -27,7 +28,7 @@ const HomeNavigation = TabNavigator({
             showIcon: true,
             tabBarIcon: ({ tintColor }) => (
                 <TabBarIcon
-                    source={require('./img/tab-icons/feed-tab-icon.png')}
+                    image={LocalImage.TabIcons.Feed}
                     tintColor={tintColor}
                 />
             ),
@@ -41,7 +42,7 @@ const HomeNavigation = TabNavigator({
             showIcon: true,
             tabBarIcon: ({ tintColor }) => (
                 <TabBarIcon
-                    source={require('./img/tab-icons/my-quests-tab-icon.png')}
+                    image={LocalImage.TabIcons.MyQuests}
                     tintColor={tintColor}
                 />
             ),
@@ -55,7 +56,7 @@ const HomeNavigation = TabNavigator({
             showIcon: true,
             tabBarIcon: ({ tintColor }) => (
                 <TabBarIcon
-                    source={require('./img/tab-icons/account-tab-icon.png')}
+                    image={LocalImage.TabIcons.Account}
                     tintColor={tintColor}
                 />
             ),
@@ -69,7 +70,7 @@ const HomeNavigation = TabNavigator({
             showIcon: true,
             tabBarIcon: ({ tintColor }) => (
                 <TabBarIcon
-                    source={require('./img/tab-icons/settings-tab-icon.png')}
+                    image={LocalImage.TabIcons.Settings}
                     tintColor={tintColor}
                 />
             ),
