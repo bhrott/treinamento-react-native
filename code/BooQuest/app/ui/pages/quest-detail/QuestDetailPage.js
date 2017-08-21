@@ -17,7 +17,7 @@ import {
     Alert,
     LocalImage
 } from 'boo-ui/components'
-import AnswerList from './AnswerList'
+import CommentsList from './CommentsList'
 
 export default class QuestDetailPage extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class QuestDetailPage extends React.Component {
         this.quest = this.props.navigation.state.params.quest
 
         this.state = {
-            answerListOpened: false
+            commentsListOpened: false
         }
     }
 
@@ -45,12 +45,12 @@ export default class QuestDetailPage extends React.Component {
         Alert.getGlobalInstance().showSuccess(message)
     }
 
-    _openAnswers() {
-        this.setState({ answerListOpened: true })
+    _openComments() {
+        this.setState({ commentsListOpened: true })
     }
 
-    _closeAnswers() {
-        this.setState({ answerListOpened: false })
+    _closeComments() {
+        this.setState({ commentsListOpened: false })
     }
 
     _renderHeader() {
@@ -93,23 +93,23 @@ export default class QuestDetailPage extends React.Component {
         )
     }
 
-    _renderAnswerAction() {
+    _renderCommentsAction() {
         return (
             <TouchableOpacity 
-                onPress={this._openAnswers.bind(this)}
-                style={answersStyle.container}>
-                <View style={answersStyle.divisor}></View>
-                <Text style={answersStyle.text}>Answers ({this.quest.commentsCount})</Text>
+                onPress={this._openComments.bind(this)}
+                style={commentsStyle.container}>
+                <View style={commentsStyle.divisor}></View>
+                <Text style={commentsStyle.text}>Comments ({this.quest.commentsCount})</Text>
             </TouchableOpacity>
         )
     }
 
-    _renderAnswersList() {
+    _renderCommentsList() {
         return (
-            <AnswerList 
+            <CommentsList 
                 quest={this.quest}
-                opened={this.state.answerListOpened}
-                onRequestClose={this._closeAnswers.bind(this)} />
+                opened={this.state.commentsListOpened}
+                onRequestClose={this._closeComments.bind(this)} />
         )
     }
 
@@ -123,8 +123,8 @@ export default class QuestDetailPage extends React.Component {
                 {this._renderHeader()}
                 {this._renderDescription()}
                 {this._renderShareCode()}
-                {this._renderAnswerAction()}
-                {this._renderAnswersList()}
+                {this._renderCommentsAction()}
+                {this._renderCommentsList()}
             </View>
         )
     }
@@ -196,7 +196,7 @@ const shareCodeStyle = StyleSheet.create({
     }
 })
 
-const answersStyle = StyleSheet.create({
+const commentsStyle = StyleSheet.create({
     container: {
         width: '100%',
         height: 60,

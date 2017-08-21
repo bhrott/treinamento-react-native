@@ -21,7 +21,7 @@ import { QuestCommentsListener } from 'boo-domain'
 
 const { height, width } = Dimensions.get('window')
 
-export default class AnswerList extends React.Component {
+export default class CommentsList extends React.Component {
     constructor(props) {
         super(props)
 
@@ -162,13 +162,13 @@ export default class AnswerList extends React.Component {
     }
 }
 
-AnswerList.propTypes = {
+CommentsList.propTypes = {
     quest: PropTypes.object.isRequired,
     opened: PropTypes.bool.isRequired,
     onRequestClose: PropTypes.func.isRequired
 }
 
-AnswerList.defaultProps = {
+CommentsList.defaultProps = {
     opened: false,
     onRequestClose: () => { }
 }
