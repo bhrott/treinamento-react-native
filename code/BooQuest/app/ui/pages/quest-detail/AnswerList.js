@@ -6,16 +6,18 @@ import {
     Dimensions,
     Animated,
     Image,
-    FlatList
+    FlatList,
+    Easing
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { 
+import {
     Text,
     KeyboardScrollView,
-    LocalImage
+    LocalImage,
+    ActionFloatButton
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
-import { QuestCommentsListener } from 'boo-domain' 
+import { QuestCommentsListener } from 'boo-domain'
 
 const { height, width } = Dimensions.get('window')
 
@@ -29,6 +31,7 @@ export default class AnswerList extends React.Component {
         }
 
         this.containerTopPosition = new Animated.Value(height)
+        this.newCommentsOpacity = new Animated.Value(0)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,9 +67,11 @@ export default class AnswerList extends React.Component {
     }
 
     _reactToNewProps(props) {
-        this.setState({ opened: props.opened })
+        const { opened } = props
 
-        let nextTopPosition = props.opened ? 0 : height
+        this.setState({ opened: opened })
+
+        let nextTopPosition = opened ? 0 : height
 
         Animated.timing(
             this.containerTopPosition,
@@ -74,21 +79,38 @@ export default class AnswerList extends React.Component {
                 toValue: nextTopPosition,
                 duration: 300
             }
-        ).start()
+        ).start(() => {
+            this._setCommentsButtonOpacity(opened ? 1 : 0)
+        })
+    }
+
+    _setCommentsButtonOpacity(opacity) {
+        Animated.timing(
+            this.newCommentsOpacity,
+            {
+                toValue: opacity,
+                easing: Easing.linear,
+                duration: 300,
+            }
+        ).start();
     }
 
     _requestClose() {
         this.props.onRequestClose()
     }
 
+    _openNewCommentForm() {
+
+    }
+
     _renderHeader() {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPress={this._requestClose.bind(this)}
                 style={headerStyle.container}>
-                <LocalImage.Back style={headerStyle.imageBack}/>
+                <LocalImage.Back style={headerStyle.imageBack} />
                 <Text
-                    numberOfLines={1} 
+                    numberOfLines={1}
                     style={headerStyle.text}>
                     {this.props.quest.title}
                 </Text>
@@ -106,6 +128,13 @@ export default class AnswerList extends React.Component {
                     keyExtractor={(item, index) => { return item.key }}
                     renderItem={this._renderListItem.bind(this)}
                 />
+                <Animated.View
+                    style={[bodyStyle.addNewCommentButton, { opacity: this.newCommentsOpacity }]}>
+                    <ActionFloatButton
+                        image={LocalImage.AddNewComment}
+                        onPress={this._openNewCommentForm.bind(this)}
+                    />
+                </Animated.View>
             </View>
         )
     }
@@ -141,7 +170,7 @@ AnswerList.propTypes = {
 
 AnswerList.defaultProps = {
     opened: false,
-    onRequestClose: () => {}
+    onRequestClose: () => { }
 }
 
 const styles = StyleSheet.create({
@@ -181,7 +210,7 @@ const headerStyle = StyleSheet.create({
         position: 'absolute',
         top: 15,
         left: 20,
-        transform:[{rotate: '-90 deg'}]
+        transform: [{ rotate: '-90 deg' }]
     }
 })
 
@@ -190,6 +219,11 @@ const bodyStyle = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center'
+    },
+    addNewCommentButton: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10
     }
 })
 

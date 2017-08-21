@@ -10,6 +10,7 @@ export default {
     LogoCreateAccount: (props) => <Image {...props} source={require('./img/logo-create-account.png')} />,
     Back: (props) => <Image {...props} source={require('./img/back.png')} />,
     Ink: (props) => <Image {...props} source={require('./img/ink.png')} />,
+    AddNewComment: (props) => <Image {...props} source={require('./img/add-new-comment.png')} />,
     TabIcons: {
         Account: (props) => <Image {...props} source={require('./img/tab-icons/account-tab-icon.png')} />,
         Feed: (props) => <Image {...props} source={require('./img/tab-icons/feed-tab-icon.png')} />,
