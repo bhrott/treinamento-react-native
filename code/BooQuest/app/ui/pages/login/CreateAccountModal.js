@@ -14,7 +14,8 @@ import {
     LinkButton,
     KeyboardScrollView,
     Alert,
-    ModalHeader
+    ModalHeader,
+    LocalImage
 } from 'boo-ui/components'
 import {
     TextValidator
@@ -120,7 +121,7 @@ export default class CreateAccountModal extends React.Component {
                     <View style={style.container}>
                         <ModalHeader
                             text={'Create your account'}
-                            image={require('./img/logo-create-account.png')}
+                            image={LocalImage.LogoCreateAccount}
                         />
                         <View style={formStyle.container}>
                             <Email

@@ -9,7 +9,11 @@ import {
     FlatList
 } from 'react-native'
 import PropTypes from 'prop-types'
-import { Text } from 'boo-ui/components'
+import { 
+    Text,
+    KeyboardScrollView,
+    LocalImage
+} from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { QuestCommentsListener } from 'boo-domain' 
 
@@ -82,9 +86,7 @@ export default class AnswerList extends React.Component {
             <TouchableOpacity 
                 onPress={this._requestClose.bind(this)}
                 style={headerStyle.container}>
-                <Image 
-                    source={require('./img/back.png')}
-                    style={headerStyle.imageBack}/>
+                <LocalImage.Back style={headerStyle.imageBack}/>
                 <Text
                     numberOfLines={1} 
                     style={headerStyle.text}>
@@ -109,18 +111,6 @@ export default class AnswerList extends React.Component {
     }
 
     _renderListItem({ item }) {
-        const listItemStyle = StyleSheet.create({
-            container: {
-                width: '100%',
-                borderColor: ColorPalette.grayUltraLight,
-                borderBottomWidth: 1,
-                paddingBottom: 5
-            },
-            author: {
-                color: ColorPalette.grayLight
-            }
-        })
-
         return (
             <View style={listItemStyle.container}>
                 <Text style={listItemStyle.author}>A blue zombie</Text>
@@ -132,10 +122,12 @@ export default class AnswerList extends React.Component {
     render() {
         return (
             <Animated.View style={[styles.container, { top: this.containerTopPosition }]}>
-                <View style={styles.content}>
-                    {this._renderHeader()}
-                    {this._renderBody()}
-                </View>
+                <KeyboardScrollView>
+                    <View style={styles.content}>
+                        {this._renderHeader()}
+                        {this._renderBody()}
+                    </View>
+                </KeyboardScrollView>
             </Animated.View>
         )
     }
@@ -204,5 +196,17 @@ const bodyStyle = StyleSheet.create({
 const listStyles = StyleSheet.create({
     container: {
         width: '90%'
+    }
+})
+
+const listItemStyle = StyleSheet.create({
+    container: {
+        width: '100%',
+        borderColor: ColorPalette.grayUltraLight,
+        borderBottomWidth: 1,
+        paddingBottom: 5
+    },
+    author: {
+        color: ColorPalette.grayLight
     }
 })

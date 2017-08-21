@@ -5,14 +5,13 @@ import {
     StyleSheet
 } from 'react-native'
 import { ColorPalette } from 'boo-ui/utils'
+import { LocalImage } from 'boo-ui/components'
 
 export default class LoadingPage extends React.Component {
     render() {
         return (
             <View style={style.container}>
-                <Image
-                    style={style.logo}
-                    source={require('../img/logo.png')} />
+                <LocalImage.Logo style={style.logo} />
             </View>
         )
     }

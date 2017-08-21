@@ -14,7 +14,8 @@ import { ColorPalette } from 'boo-ui/utils'
 import {
     Text,
     QuestShareCode,
-    Alert
+    Alert,
+    LocalImage
 } from 'boo-ui/components'
 import AnswerList from './AnswerList'
 
@@ -56,18 +57,15 @@ export default class QuestDetailPage extends React.Component {
         return (
             <View style={headerStyles.container}>
                 <View style={headerStyles.content}>
-                    <Image
-                        source={require('./img/parchment.png')}
-                        resizeMode={'contain'} />
+                    <LocalImage.Parchment resizeMode={'contain'} />
                     <Text style={headerStyles.title}>{this.quest.title}</Text>
                 </View>
 
                 <TouchableOpacity
                     onPress={this._goBack.bind(this)}
                     style={headerStyles.backButton}>
-                    <Image
+                    <LocalImage.Back
                         style={headerStyles.backButtonImage}
-                        source={require('./img/back.png')}
                         resizeMode={'contain'} />
                 </TouchableOpacity>
             </View>

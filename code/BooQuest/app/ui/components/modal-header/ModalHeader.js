@@ -10,11 +10,12 @@ import { ColorPalette } from 'boo-ui/utils'
 
 export default class ModalHeader extends React.Component {
     render() {
+        const ImageComponent = this.props.image
+
         return (
             <View style={[styles.container, {height: this.props.height}]}>
                 <View style={styles.content}>
-                    <Image 
-                        source={this.props.image}
+                    <ImageComponent
                         style={styles.image}
                         resizeMode={'contain'}
                     />

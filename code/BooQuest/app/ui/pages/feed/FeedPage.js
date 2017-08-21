@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     View,
-    Image,
     StyleSheet,
     TouchableOpacity,
     FlatList
@@ -9,7 +8,8 @@ import {
 import {
     Text,
     TabBarIcon,
-    Alert
+    Alert,
+    LocalImage
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import {
@@ -75,9 +75,7 @@ export default class FeedPage extends React.Component {
 
                     <View style={headerNotificationStyles.container}>
                         <View style={headerNotificationStyles.content}>
-                            <Image
-                                source={require('./img/alarm.png')}
-                            />
+                            <LocalImage.Alarm />
                             <Text style={headerNotificationStyles.counter}>0</Text>
                         </View>
                     </View>
@@ -93,11 +91,6 @@ export default class FeedPage extends React.Component {
                 <TouchableOpacity 
                     style={titleStyles.newQuestButtonContainer}
                     onPress={this._openCreateNewQuestModal.bind(this)}>
-                    <Image
-                        style={titleStyles.newQuestButtonImage}
-                        source={require('./img/add-new-quest.png')}
-                        resizeMode={'contain'}
-                    />
                 </TouchableOpacity>
 
             </View>
@@ -110,7 +103,7 @@ export default class FeedPage extends React.Component {
                 <FlatList
                     style={listStyles.list}
                     data={this.state.publicQuests}
-                    keyExtractor={this._getListItemId.bind(this)}
+                    keyExtractor={(item, index) => item.key }
                     renderItem={this._renderListItem.bind(this)}
                 />
             </View>
@@ -127,9 +120,8 @@ export default class FeedPage extends React.Component {
                         <View style={listItemCommentCountStyles.container}>
                             <View style={listItemCommentCountStyles.content}>
                                 <Text style={listItemCommentCountStyles.text}>{item.commentsCount}</Text>
-                                <Image
+                                <LocalImage.CommentsCount
                                     style={listItemCommentCountStyles.image}
-                                    source={require('./img/comments-count.png')}
                                     resizeMode={'contain'}
                                 />
                             </View>
@@ -152,8 +144,35 @@ export default class FeedPage extends React.Component {
         )
     }
 
-    _getListItemId(item, index) {
-        return item.key
+    _renderCreateQuestAction() {
+        const newQuestActionStyles = StyleSheet.create({
+            container: {
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                backgroundColor: ColorPalette.greenPrimary,
+                alignItems: 'center',
+                justifyContent: 'center'
+            },
+            image: {
+                height: '60%',
+                width: '60%',
+                tintColor: ColorPalette.white
+            }
+        })
+
+        return (
+            <TouchableOpacity 
+                style={newQuestActionStyles.container}
+                onPress={this._openCreateNewQuestModal.bind(this)}>
+                <LocalImage.Parchment
+                    style={newQuestActionStyles.image}
+                    resizeMode={'contain'}/>
+            </TouchableOpacity>
+        )
     }
 
     render() {
@@ -162,6 +181,7 @@ export default class FeedPage extends React.Component {
                 {this._renderHeader()}
                 {this._renderTitle()}
                 {this._renderList()}
+                {this._renderCreateQuestAction()}
 
                 <CreateNewQuestModal
                     visible={this.state.createNewQuestModalIsOpened}
@@ -242,10 +262,6 @@ const titleStyles = StyleSheet.create({
         position: 'absolute',
         bottom: 5,
         right: 0
-    },
-    newQuestButtonImage: {
-        height: '100%',
-        width: '100%'
     }
 })
 

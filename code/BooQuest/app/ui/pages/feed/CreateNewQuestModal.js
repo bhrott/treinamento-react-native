@@ -2,7 +2,6 @@ import React from 'react'
 import {
     View,
     Modal,
-    Image,
     TouchableHighlight,
     StyleSheet
 } from 'react-native'
@@ -15,7 +14,8 @@ import {
     KeyboardScrollView,
     Switch,
     Alert,
-    QuestShareCode
+    QuestShareCode,
+    LocalImage
 } from 'boo-ui/components'
 import { TextValidator } from 'boo-core'
 import { 
@@ -136,7 +136,7 @@ export default class CreateNewQuestModal extends React.Component {
                     <View style={styles.container}>
                         <ModalHeader
                             text={'Create new quest'}
-                            image={require('./img/add-new-quest.png')}
+                            image={LocalImage.AddNewQuest}
                         />
                         <View style={formStyle.container}>
                             <Input

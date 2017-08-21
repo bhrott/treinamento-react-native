@@ -13,7 +13,8 @@ import {
     PrimaryButton,
     LinkButton,
     KeyboardScrollView,
-    Alert
+    Alert,
+    LocalImage
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { TextValidator } from 'boo-core'
@@ -134,7 +135,7 @@ export default class LoginPage extends React.Component {
                 style={styles.scrollView}>
                 <View style={styles.container}>
                     <View style={logoStyle.container}>
-                        <Image source={require('../img/logo.png')} />
+                        <LocalImage.Logo />
                         <View>
                             <Text style={logoStyle.title}>
                                 BOO QUEST
