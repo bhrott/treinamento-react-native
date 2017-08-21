@@ -15,6 +15,7 @@ import ModalHeader from './modal-header/ModalHeader'
 import Switch from './switch/Switch'
 import QuestShareCode from './quest-share-code/QuestShareCode'
 import LocalImage from './local-image/LocalImage'
+import ActionFloatButton from './action-float-button/ActionFloatButton'
 
 module.exports = {
     Text,
@@ -29,5 +30,6 @@ module.exports = {
     ModalHeader,
     Switch,
     QuestShareCode,
-    LocalImage
+    LocalImage,
+    ActionFloatButton
 }

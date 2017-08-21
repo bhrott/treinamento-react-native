@@ -9,7 +9,8 @@ import {
     Text,
     TabBarIcon,
     Alert,
-    LocalImage
+    LocalImage,
+    ActionFloatButton
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import {
@@ -145,33 +146,11 @@ export default class FeedPage extends React.Component {
     }
 
     _renderCreateQuestAction() {
-        const newQuestActionStyles = StyleSheet.create({
-            container: {
-                height: 50,
-                width: 50,
-                borderRadius: 25,
-                position: 'absolute',
-                bottom: 20,
-                right: 20,
-                backgroundColor: ColorPalette.greenPrimary,
-                alignItems: 'center',
-                justifyContent: 'center'
-            },
-            image: {
-                height: '60%',
-                width: '60%',
-                tintColor: ColorPalette.white
-            }
-        })
-
         return (
-            <TouchableOpacity 
+            <ActionFloatButton 
+                image={LocalImage.Ink}
                 style={newQuestActionStyles.container}
-                onPress={this._openCreateNewQuestModal.bind(this)}>
-                <LocalImage.Parchment
-                    style={newQuestActionStyles.image}
-                    resizeMode={'contain'}/>
-            </TouchableOpacity>
+                onPress={this._openCreateNewQuestModal.bind(this)} />
         )
     }
 
@@ -318,5 +297,13 @@ const listItemCommentCountStyles = StyleSheet.create({
     },
     image: {
 
+    }
+})
+
+const newQuestActionStyles = StyleSheet.create({
+    container: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20
     }
 })
