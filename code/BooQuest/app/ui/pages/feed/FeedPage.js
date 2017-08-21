@@ -154,6 +154,15 @@ export default class FeedPage extends React.Component {
         )
     }
 
+    _renderCreateNewQuestModal() {
+        return (
+            <CreateNewQuestModal
+                visible={this.state.createNewQuestModalIsOpened}
+                onRequestClose={this._closeCreateNewQuestModal.bind(this)}
+                onComplete={this._onQuestCreated.bind(this)} />
+        )
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -161,11 +170,7 @@ export default class FeedPage extends React.Component {
                 {this._renderTitle()}
                 {this._renderList()}
                 {this._renderCreateQuestAction()}
-
-                <CreateNewQuestModal
-                    visible={this.state.createNewQuestModalIsOpened}
-                    onRequestClose={this._closeCreateNewQuestModal.bind(this)}
-                    onComplete={this._onQuestCreated.bind(this)} />
+                {this._renderCreateNewQuestModal()}                
             </View>
         )
     }
