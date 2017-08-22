@@ -68,3 +68,15 @@ Treinamento em React-Native para CWI
     * Parte 15: Animações
         * Como utilizar.
         * Presets embarcados.
+
+
+## Requisitos Técnicos
+
+* Se possuir smartphone (iOS 9+ ou Android 5+), podemos rodar o projeto direto no celular.
+* Caso prefira rodar no Windows/Linux, instalar o [Android Studio](https://developer.android.com/studio/index.html?hl=pt-br) e configurar o Android SDK.
+* Caso prefira rodar no OSX, instalar o [XCode](https://developer.apple.com/xcode/).
+
+## Instalação
+* Instale o [NodeJS](https://nodejs.org/en/) versão atual (current).
+* No terminal, execute o comando `npm install -g create-react-app`
+* No terminal, execute o comando `npm install -g create-react-native-app`
