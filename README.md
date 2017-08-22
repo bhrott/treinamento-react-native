@@ -45,26 +45,26 @@ Treinamento em React-Native para CWI
         * Entendendo métodos e referências.
         * Trabalhando com bibliotecas externas.
             * [react-native-keyboard-aware-scroll-view](https://github.com/APSL/react-native-keyboard-aware-scroll-view)
-    * Parte 8: Listas
+    * Parte 9: Listas
         * Tipos existentes.
         * FlatList
         * Ações nos itens da lista.
-    * Parte 9: Navegação
+    * Parte 10: Navegação
         * Conhecendo [React Navigation](https://reactnavigation.org/)
         * Trabalhando com comportamentos específicos de cada plataforma (botão `back` do android)
-    * Parte 10: Organização de uma aplicação enterprise.
+    * Parte 11: Organização de uma aplicação enterprise.
         * Separando componentes, rotas e telas.
         * Centralizando principais configurações.
         * Emtendendo módulos (`@providesModule`)
-    * Parte 11: Networking
+    * Parte 12: Networking
         * Como trabalhar com requisições web?
         * Entendento async/await.
-    * Parte 12: Código por plataforma
+    * Parte 13: Código por plataforma
         * Como executar partes de código somente no Android? Ou somente no iOS?
         * Separação por abstração e composição.
-    * Parte 13: Tratamento de erros
+    * Parte 14: Tratamento de erros
         * Debugando seu código.
         * Identificando erros e corrigindo-os.
-    * Parte 14: Animações
+    * Parte 15: Animações
         * Como utilizar.
         * Presets embarcados.
