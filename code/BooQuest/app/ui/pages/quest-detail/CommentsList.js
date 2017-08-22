@@ -7,14 +7,18 @@ import {
     Animated,
     Image,
     FlatList,
-    Easing
+    Easing,
+    LayoutAnimation
 } from 'react-native'
 import PropTypes from 'prop-types'
 import {
     Text,
     KeyboardScrollView,
     LocalImage,
-    ActionFloatButton
+    ActionFloatButton,
+    Input,
+    PrimaryButton,
+    LinkButton
 } from 'boo-ui/components'
 import { ColorPalette } from 'boo-ui/utils'
 import { QuestCommentsListener } from 'boo-domain'
@@ -27,11 +31,13 @@ export default class CommentsList extends React.Component {
 
         this.state = {
             opened: false,
-            comments: []
+            comments: [],
+
+            newCommentsActionIsVisible: false,
+            newCommentsFormIsVisible: false
         }
 
         this.containerTopPosition = new Animated.Value(height)
-        this.newCommentsOpacity = new Animated.Value(0)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -80,27 +86,43 @@ export default class CommentsList extends React.Component {
                 duration: 300
             }
         ).start(() => {
-            this._setCommentsButtonOpacity(opened ? 1 : 0)
-        })
-    }
-
-    _setCommentsButtonOpacity(opacity) {
-        Animated.timing(
-            this.newCommentsOpacity,
-            {
-                toValue: opacity,
-                easing: Easing.linear,
-                duration: 300,
+            if (opened) {
+                this._showNewCommentsAction()
             }
-        ).start();
+            else {
+                this._hideNewCommentsAction()
+            }
+        })
     }
 
     _requestClose() {
         this.props.onRequestClose()
     }
 
-    _openNewCommentForm() {
+    _showNewCommentsAction() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+        this.setState({ newCommentsActionIsVisible: true })
+    }
 
+    _hideNewCommentsAction() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+        this.setState({ newCommentsActionIsVisible: false })
+    }
+
+    _openNewCommentForm() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+        this.setState({
+            newCommentsActionIsVisible: false,
+            newCommentsFormIsOpened: true
+        })
+    }
+
+    _closeNewCommentForm() {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+        this.setState({
+            newCommentsActionIsVisible: true,
+            newCommentsFormIsOpened: false
+        })
     }
 
     _renderHeader() {
@@ -128,13 +150,8 @@ export default class CommentsList extends React.Component {
                     keyExtractor={(item, index) => { return item.key }}
                     renderItem={this._renderListItem.bind(this)}
                 />
-                <Animated.View
-                    style={[bodyStyle.addNewCommentButton, { opacity: this.newCommentsOpacity }]}>
-                    <ActionFloatButton
-                        image={LocalImage.AddNewComment}
-                        onPress={this._openNewCommentForm.bind(this)}
-                    />
-                </Animated.View>
+                {this._renderNewCommentsAction()}
+                {this._renderNewCommentForm()}
             </View>
         )
     }
@@ -145,6 +162,55 @@ export default class CommentsList extends React.Component {
                 <Text style={listItemStyle.author}>A blue zombie</Text>
                 <Text>{item.text}</Text>
             </View>
+        )
+    }
+
+    _renderNewCommentsAction() {
+        if (!this.state.newCommentsActionIsVisible) {
+            return null
+        }
+
+        return (
+            <Animated.View
+                style={[bodyStyle.addNewCommentButton]}>
+                <ActionFloatButton
+                    image={LocalImage.AddNewComment}
+                    onPress={this._openNewCommentForm.bind(this)}
+                />
+            </Animated.View>
+        )
+    }
+
+    _renderNewCommentForm() {
+        if (!this.state.newCommentsFormIsOpened) {
+            return null
+        }
+
+        return (
+            <Animated.View style={[newCommentsFormStyle.container]}>
+                <Input
+                    ref={'txtNewComment'}
+                    placeholder={'insert a comment (optional, 500)'}
+                    style={{ height: 110 }}
+                    multiline={true}
+                    numberOfLines={4}
+                    maxLength={500}
+                    error={false}
+                    onChangeText={val => this.setState({ newComment: val })}
+                    value={this.state.newComment} />
+                <View style={newCommentsFormStyle.buttons}>
+                    <View style={{ flex: 1 }}>
+                        <LinkButton
+                            text={'cancel'}
+                            onPress={this._closeNewCommentForm.bind(this)} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <PrimaryButton
+                            text={'send'}
+                            onPress={() => {}} />
+                    </View>
+                </View>
+            </Animated.View>
         )
     }
 
@@ -242,5 +308,22 @@ const listItemStyle = StyleSheet.create({
     },
     author: {
         color: ColorPalette.grayLight
+    }
+})
+
+const newCommentsFormStyle = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: 200,
+        borderTopWidth: 1,
+        borderColor: ColorPalette.greenPrimary,
+        backgroundColor: ColorPalette.white,
+        padding: 10
+    },
+    buttons: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })

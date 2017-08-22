@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Platform,
-  StatusBar
+  StatusBar,
+  UIManager
 } from 'react-native'
 import { Font } from 'expo'
 import { RootNavigation } from 'boo-ui/navigation'
@@ -38,6 +39,8 @@ export default class App extends React.Component {
 
     Logger.initialize()
     Firebase.initialize(appSettings.firebase.config)
+
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
 
     setTimeout(() => {
       this._goToLogin()
