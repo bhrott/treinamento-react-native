@@ -33,12 +33,12 @@ Treinamento em React-Native para CWI
         * Como utilizar.
         * Centralizando resources.
         * Otimizando ícones.
-    * Parte 6: Botões
-        * Como utilizar
-        * Tipos existentes
-    * Parte 7: Layout com base em dados
+    * Parte 6: Layout com base em dados
         * State e atualização de dados.
         * Renderização condicional.
+    * Parte 7: Botões
+        * Como utilizar
+        * Tipos existentes
     * Parte 8: TextInput
         * Trabalhando com teclado.
         * Validando de dados.
