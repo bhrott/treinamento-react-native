@@ -55,7 +55,7 @@ Treinamento em React-Native para CWI
     * Parte 11: Organização de uma aplicação enterprise.
         * Separando componentes, rotas e telas.
         * Centralizando principais configurações.
-        * Emtendendo módulos (`@providesModule`)
+        * Entendendo módulos (`@providesModule`)
     * Parte 12: Networking
         * Como trabalhar com requisições web?
         * Entendento async/await.
