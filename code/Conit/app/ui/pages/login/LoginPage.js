@@ -52,7 +52,7 @@ export default class LoginPage extends React.Component {
 
     keyboardWillShow() {
         Animated.timing(this.state.formPositionBottom, {
-            toValue: 250,
+            toValue: 270,
             duration: 250
         }).start()
     }
@@ -101,12 +101,14 @@ export default class LoginPage extends React.Component {
                             <Text>sign in with your account</Text>
                         </View>
                         <Input
+                            keyboardType={'email-address'}
                             style={formStyle.input}
                             placeholder="myemail@emai.com"
                         />
                         <Input
                             style={[formStyle.input, { marginTop: 10 }]}
                             placeholder="******"
+                            secureTextEntry={true}
                         />
                         <PrimaryButton
                             text="SIGNIN"
@@ -158,15 +160,15 @@ const formStyle = StyleSheet.create({
     container: {
         position: 'absolute',
         width: '100%',
-        height: 300,
         alignItems: 'center'
     },
     content: {
-        height: '100%',
+        // height: '100%',
         width: 300,
         backgroundColor: 'white',
         borderRadius: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 15
     },
     signTextContainer: {
         alignItems: 'center',
@@ -174,9 +176,7 @@ const formStyle = StyleSheet.create({
         height: 40,
         marginTop: 10
     },
-    input: {
-        width: '90%'
-    },
+    input: {},
     button: {
         width: '90%',
         marginTop: 20
