@@ -2,17 +2,22 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 import { ColorPalette } from 'conit/ui/theme'
-import { Input, PrimaryButton } from 'conit/ui/components'
+import { Input, PrimaryButton, GoogleSigninButton } from 'conit/ui/components'
 
 export default class LoginPage extends React.Component {
     constructor(props) {
         super(props)
 
         this._onSigninPressed = this._onSigninPressed.bind(this)
+        this._onSigninWithGoogle = this._onSigninWithGoogle.bind(this)
     }
 
     _onSigninPressed() {
         alert('signin pressed')
+    }
+
+    _onSigninWithGoogle() {
+
     }
 
     render() {
@@ -35,7 +40,11 @@ export default class LoginPage extends React.Component {
                         <PrimaryButton
                             text='SIGNIN'
                             onPress={this._onSigninPressed}
-                            style={formStyle.signinButton}
+                            style={formStyle.button}
+                        />
+                        <GoogleSigninButton
+                            onPress={this._onSigninWithGoogle}
+                            style={formStyle.button}
                         />
                     </View>
                 </View>
@@ -89,7 +98,7 @@ const formStyle = StyleSheet.create({
     input: {
         width: '90%',
     },
-    signinButton: {
+    button: {
         width: '90%',
         marginTop: 20
     }
