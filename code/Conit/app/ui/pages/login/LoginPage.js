@@ -1,12 +1,20 @@
 import React from 'react'
-import { View, Text, StyleSheet, Keyboard, Animated } from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Keyboard,
+    Animated,
+    TouchableOpacity
+} from 'react-native'
 
 import { ColorPalette } from 'conit/ui/theme'
 import {
     Input,
     PrimaryButton,
     GoogleSigninButton,
-    LinkButton
+    LinkButton,
+    Icon
 } from 'conit/ui/components'
 import { debounce } from 'conit/core/pure-functions'
 
@@ -23,32 +31,33 @@ export default class LoginPage extends React.Component {
             this
         )
         this._onCreateAccountPressed = this._onCreateAccountPressed.bind(this)
+        this._dismissKeyboard = this._dismissKeyboard.bind(this)
     }
 
     componentDidMount() {
-        this.keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow',
-            debounce(this._keyboardDidShow.bind(this), 250)
+        this.keyboardWillShowListener = Keyboard.addListener(
+            'keyboardWillShow',
+            debounce(this.keyboardWillShow.bind(this), 250)
         )
-        this.keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide',
-            debounce(this._keyboardDidHide.bind(this), 250)
+        this.keyboardWillHideListener = Keyboard.addListener(
+            'keyboardWillHide',
+            debounce(this._keyboardWillHide.bind(this), 250)
         )
     }
 
     componentWillUnmount() {
-        this.keyboardDidShowListener.remove()
-        this.keyboardDidHideListener.remove()
+        this.keyboardWillShowListener.remove()
+        this.keyboardWillHideListener.remove()
     }
 
-    _keyboardDidShow() {
+    keyboardWillShow() {
         Animated.timing(this.state.formPositionBottom, {
             toValue: 250,
             duration: 250
         }).start()
     }
 
-    _keyboardDidHide() {
+    _keyboardWillHide() {
         Animated.timing(this.state.formPositionBottom, {
             toValue: 80,
             duration: 250
@@ -67,10 +76,20 @@ export default class LoginPage extends React.Component {
         alert('create account pressed')
     }
 
+    _dismissKeyboard() {
+        Keyboard.dismiss()
+    }
+
     render() {
         return (
-            <View style={styles.page}>
-                <View style={styles.logoContainer} />
+            <TouchableOpacity
+                style={styles.page}
+                activeOpacity={1}
+                onPress={this._dismissKeyboard}
+            >
+                <View style={styles.logoContainer}>
+                    <Icon.Logo />
+                </View>
                 <Animated.View
                     style={[
                         formStyle.container,
@@ -110,7 +129,7 @@ export default class LoginPage extends React.Component {
                         />
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -123,7 +142,9 @@ const styles = StyleSheet.create({
     logoContainer: {
         width: '100%',
         height: '60%',
-        backgroundColor: ColorPalette.primary
+        backgroundColor: ColorPalette.primary,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     createAccountContainer: {
         position: 'absolute',
